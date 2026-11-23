@@ -1,0 +1,62 @@
+[
+  {
+    "id": "question",
+    "start": 0,
+    "title": "Snapped, but still not legal?"
+  },
+  {
+    "id": "site",
+    "start": 22.03333333333333,
+    "title": "First: snap x to the nearest site"
+  },
+  {
+    "id": "row",
+    "start": 42.23333333333333,
+    "title": "Next: choose the nearest row bottom"
+  },
+  {
+    "id": "collision",
+    "start": 65.03333333333333,
+    "title": "One location cannot hold two cells"
+  },
+  {
+    "id": "clamp",
+    "start": 89.66666666666666,
+    "title": "The boundary must fit the full cell width"
+  },
+  {
+    "id": "fixed",
+    "start": 111.43333333333334,
+    "title": "Fixed macros follow their locked constraints"
+  },
+  {
+    "id": "displacement",
+    "start": 135.46666666666667,
+    "title": "Two displacement definitions, two answers"
+  },
+  {
+    "id": "hpwl",
+    "start": 156.26666666666668,
+    "title": "Short wirelength does not prove legality"
+  },
+  {
+    "id": "ties",
+    "start": 181.70000000000002,
+    "title": "Write down what happens exactly halfway"
+  },
+  {
+    "id": "touching",
+    "start": 205.76666666666668,
+    "title": "Touching edges are not positive-area overlap"
+  },
+  {
+    "id": "limits",
+    "start": 225.76666666666668,
+    "title": "Snapping is a first step, not a complete legalizer"
+  },
+  {
+    "id": "try-it",
+    "start": 252.96666666666667,
+    "title": "Now snap a placement and audit it yourself"
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "digest": "17a565b1e4eb1891ffa56ad983e258ebd4b2e2eb597b243c341186e90b982900",
+  "voice": "en-US-JennyNeural",
+  "text": "This does not optimize a fixed macro. Restoring the constraint creates a coordinate difference of point six, which must be explicitly included or excluded from displacement.",
+  "semantic_id": "fixed-1"
+}

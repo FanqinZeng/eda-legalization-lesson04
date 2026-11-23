@@ -1,0 +1,6 @@
+{
+  "digest": "fdd7cb9655c3539021d6f7718c621de03c925eae0ed51ae70e48bbc6d458e528",
+  "voice": "en-US-JennyNeural",
+  "text": "Place width-one A at x equal to one and width-one B at two. Their edges touch, but they share no positive area.",
+  "semantic_id": "touching-0"
+}

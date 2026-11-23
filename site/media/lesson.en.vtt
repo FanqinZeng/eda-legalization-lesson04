@@ -1,0 +1,118 @@
+WEBVTT
+
+question-0
+00:00:00.000 --> 00:00:10.250 line:78% size:92%
+Global placement leaves fractional coordinates. Moving cells to the nearest sites and rows looks like the last step. Is it
+really?
+
+question-1
+00:00:10.300 --> 00:00:21.983 line:78% size:92%
+Look at these six cells. After snapping, all align, but A and B choose the same location and C intersects them too. Three
+overlapping pairs remain.
+
+site-0
+00:00:22.033 --> 00:00:32.783 line:78% size:92%
+The site width is one. A has x equal to three point seven, so its nearest integer is four. B at four point one also chooses
+four.
+
+site-1
+00:00:32.833 --> 00:00:42.183 line:78% size:92%
+Every cell makes its decision independently. The rounding rule never asks whether another cell has already claimed
+that location.
+
+row-0
+00:00:42.233 --> 00:00:53.450 line:78% size:92%
+Allowed row bottoms are zero, two and four. A at y equal to one point two is point eight from row two, closer than one
+point two from row zero.
+
+row-1
+00:00:53.500 --> 00:01:04.983 line:78% size:92%
+The y coordinate is the lower-left corner, not the center. Cell height equals row height two, so the row bottom plus the
+full height must remain inside the chip.
+
+collision-0
+00:01:05.033 --> 00:01:16.817 line:78% size:92%
+A and B both finish at four, two, while C finishes at five, two. Each has width two, so A/B, A/C and B/C all overlap.
+
+collision-1
+00:01:16.867 --> 00:01:29.617 line:78% size:92%
+This is the central limitation of greedy snap: it quantizes coordinates only. Perfect site and row alignment does not
+imply non-overlapping placement.
+
+clamp-0
+00:01:29.667 --> 00:01:41.517 line:78% size:92%
+After rounding, clamp x between zero and W minus w. On a width-six chip, a width-two cell can place its lower-left
+corner no farther right than four.
+
+clamp-1
+00:01:41.567 --> 00:01:51.383 line:78% size:92%
+Checking x against the chip width alone is insufficient. A width-two cell whose lower-left corner is at five already
+extends beyond six.
+
+fixed-0
+00:01:51.433 --> 00:02:03.083 line:78% size:92%
+The teacher data locks D at eight, four, although the float draft records eight point four, three point eight. The
+algorithm restores D to its constraint position.
+
+fixed-1
+00:02:03.133 --> 00:02:15.417 line:78% size:92%
+This does not optimize a fixed macro. Restoring the constraint creates a coordinate difference of point six, which must
+be explicitly included or excluded from displacement.
+
+displacement-0
+00:02:15.467 --> 00:02:26.750 line:78% size:92%
+Summing Manhattan distances between lower-left corners gives all-cell L1 displacement four point four. Fixed D’s
+constraint restoration contributes point six.
+
+displacement-1
+00:02:26.800 --> 00:02:36.217 line:78% size:92%
+Counting only movable cells gives three point eight. Both quantities can be reported, but you must state which cells
+were counted.
+
+hpwl-0
+00:02:36.267 --> 00:02:48.383 line:78% size:92%
+HPWL uses cell centers: x plus half the width, and y plus half the row height. Counting each of six nets once gives total
+HPWL thirty-two.
+
+hpwl-1
+00:02:48.433 --> 00:03:01.650 line:78% size:92%
+HPWL measures connectivity, not overlap. An attractive metric cannot replace site, row, bounds, fixed-constraint and
+non-overlap checks.
+
+ties-0
+00:03:01.700 --> 00:03:13.117 line:78% size:92%
+Python uses ties-to-even: two point five becomes two, and three point five becomes four. JavaScript’s Math.round
+gives three for two point five.
+
+ties-1
+00:03:13.167 --> 00:03:25.717 line:78% size:92%
+This site explicitly uses ties-to-even in both languages. Equal row distances choose the first listed row. Random tests do
+not replace exact boundary cases.
+
+touching-0
+00:03:25.767 --> 00:03:35.317 line:78% size:92%
+Place width-one A at x equal to one and width-one B at two. Their edges touch, but they share no positive area.
+
+touching-1
+00:03:35.367 --> 00:03:45.717 line:78% size:92%
+Use strict inequalities for interval intersection. Treating contact as overlap would wrongly reject valid adjacent sites.
+
+limits-0
+00:03:45.767 --> 00:04:01.183 line:78% size:92%
+Removing collisions requires later row packing, overlap removal or a method such as Abacus. This lesson explains
+greedy snap without secretly adding another solver.
+
+limits-1
+00:04:01.233 --> 00:04:12.917 line:78% size:92%
+Inspect every failed check before choosing the next step. An aligned placement that still overlaps is a useful
+counterexample, not a successful legalization result.
+
+try-it-0
+00:04:12.967 --> 00:04:25.283 line:78% size:92%
+Edit a fractional coordinate in the lab, inspect its target step by step, then try halfway values, boundary clamps and
+edge contact. Learn the rule, not just the button.
+
+try-it-1
+00:04:25.333 --> 00:04:36.983 line:78% size:92%
+Finally, recompute the same data in real Python. Alignment, displacement, wirelength and legality are four questions
+that must be explained separately.

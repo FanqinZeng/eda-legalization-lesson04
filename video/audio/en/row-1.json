@@ -1,0 +1,6 @@
+{
+  "digest": "29dc645656d3252ce03ff73f171a91db9ebac54bb4d7a1fbba0f67b522441f42",
+  "voice": "en-US-JennyNeural",
+  "text": "The y coordinate is the lower-left corner, not the center. Cell height equals row height two, so the row bottom plus the full height must remain inside the chip.",
+  "semantic_id": "row-1"
+}

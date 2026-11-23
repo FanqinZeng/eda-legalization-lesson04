@@ -1,0 +1,680 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>学习资料 · Legalization 04</title><link rel="stylesheet" href="../assets/style.css"></head><body><header><div class="wrap top"><a class="brand" id="back" href="../">Legalization 04</a><label class="lang-label">Language / 语言 <select id="language"><option value="zh">中文</option><option value="en">English</option></select></label></div></header><main class="wrap reading section"><p class="eyebrow">READ / UNDERSTAND / REPRODUCE</p><h1 data-zh="在这里，把每个约定读清楚。" data-en="Read every convention, right here.">在这里，把每个约定读清楚。</h1><p data-zh="完整资料可以直接阅读和复制。原文件下载是可选补充。" data-en="Read and copy the complete materials online. Original downloads are optional.">完整资料可以直接阅读和复制。原文件下载是可选补充。</p><nav class="toc" aria-label="Study materials"><a href="#notes" data-zh="完整讲义" data-en="Full notes">完整讲义</a><a href="#reference" data-zh="Python参考" data-en="Python reference">Python参考</a><a href="#exercise" data-zh="练习代码" data-en="Exercise">练习代码</a><a href="#data" data-zh="样例数据" data-en="Fixtures">样例数据</a><a href="#transcript-zh">中文文字稿</a><a href="#transcript-en">English transcript</a><a href="#reproduce" data-zh="复现" data-en="Reproduce">复现</a></nav><section id="notes"><article data-reading-lang="zh"><h2>对齐了，还不一定合法：Greedy Site/Row Snap</h2>
+<h3>本课解决什么，保留什么问题</h3>
+<p>输入是cell左下角的浮点坐标、各自宽度、芯片尺寸、site与row网格，以及固定宏约束。输出是吸附后的坐标。目标是让每个cell对齐site和row并满足边界，算法不会为邻居保留空间，因此不保证非重叠。</p>
+<p>学习后应能手算x取整、宽度钳制与最近row，解释half-tie、fixed宏、全体和movable位移，并使用cell中心求HPWL。完成后要能说清楚“snap”和“legal”之间少了哪项条件，而不是只会按按钮。</p>
+<h3>坐标与网格约定</h3>
+<p>本课siteW=1，chip宽W=12、高H=6；rowH=2，行底rows=[0,2,4]。每个cell高度等于rowH，宽度从数据读取。坐标是左下角，矩形占用[x,x+w]与[y,y+rowH]。</p>
+<p>图中y向上。浮点输入可能跨行、越过边界或偏离fixed锁定位置，这正是诊断内容。图形按照真实宽度和行高绘制，不能把cell都当成点来检查重叠。</p>
+<h3>核心循环与终止</h3>
+<p>每个cell只处理一次。movable单元的x先取最近整数，再限制到[0,W-w]；y选择rows中距离最近的一行。fixed宏恢复约束里明确给出的坐标。处理完所有cell即终止，不会循环搜索空位。</p>
+<pre tabindex="0"><code>for cell in cells:
+    if fixed(cell):
+        output[cell] = locked_position[cell]
+    else:
+        x = clamp(round_even(input.x), 0, W - width[cell])
+        y = first_argmin(rows, abs(row - input.y))
+        output[cell] = (x,y)
+# No overlap search or row packing occurs here.</code></pre>
+<h3>教师浮点黄金例</h3>
+<pre tabindex="0"><code>Cell  width   before        after    L1
+A       2     (3.7,1.2)     (4,2)    1.1
+B       2     (4.1,1.4)     (4,2)    0.7
+C       2     (5.2,2.3)     (5,2)    0.5
+D       2     (8.4,3.8)     (8,4)    0.6  fixed constraint
+E       1     (0.3,4.6)     (0,4)    0.9
+F       1     (10.2,0.4)    (10,0)   0.6</code></pre>
+<p>A到row2的距离是0.8，小于到row0的1.2；B也选择row2。它们的x都吸到4。C吸到5，宽度2意味着它与A、B都相交。六个cell的site、row、边界和fixed检查都可以通过，非重叠仍不通过。</p>
+<h3>等距与跨语言复现</h3>
+<p>Python round在半整数处取最近偶数：0.5→0，1.5→2，2.5→2，3.5→4。JavaScript Math.round(2.5)给3；不能直接说两个上游实现对所有边界都一致。本站JS显式实现Python取偶规则，并由独立Python交叉检查。</p>
+<p>最近行的等距规则与x取整是两件事。我们沿用rows列表先出现者，所以y=1在[0,2,4]中选择0，y=3选择2。如果把rows重排，等距答案可能变；本课默认列表按升序固定。测试2.5和3.5不能用随机浮点例子替代，因为随机数几乎碰不到恰好一半。</p>
+<h3>边界必须看到整个cell</h3>
+<p>宽W的芯片，宽w的cell，其左下角最多到W-w，而不是W。边界情境使用W=6、w=2，输入B.x=5.7先取整6，再钳制到4；最终区间[4,6]恰好留在芯片中。</p>
+<p>负x也先取整再钳制到0。合法行底由数据提供，并必须保证row+rowH不超过H。算法不能靠只检查左下角在芯片内部来证明整个矩形合法。</p>
+<h3>为什么仍有三对重叠</h3>
+<p>完整结果中，A和B都占据x区间[4,6]、y区间[2,4]；C占据[5,7]×[2,4]。A/B相交面积4，A/C与B/C各2。重叠对数是3；这些是成对面积，不把面积相加误称为唯一覆盖的重叠总面积。</p>
+<p>两个矩形只有x和y方向都存在正长度交叠，才算正面积重叠。宽1的A放在(1,0)，B在(2,0)，边缘接触但没有正面积相交，应允许。源码的已对齐同row场景与我们的二维矩形检查结果一致；浮点输入时额外展示完整二维重叠，帮助理解跨行情况。</p>
+<h3>fixed宏D与两个位移口径</h3>
+<p>教师数据的fixed约束是D=(8,4)，但starter_float原始坐标给D=(8.4,3.8)。greedy snap按锁定约束恢复D，并没有把D作为movable进行优化。恢复距离为|8-8.4|+|4-3.8|=0.6。</p>
+<p>上游total_displacement统计所有cell，即使参数名带fixed也不会排除它们。因此全体L1=1.1+0.7+0.5+0.6+0.9+0.6=4.4；只统计movable时排除D，得到3.8。本站并列显示两个定义，读报告前先确认计数范围。</p>
+<h3>HPWL使用中心，也不证明合法</h3>
+<p>cell中心是(x+w/2,y+rowH/2)。每个net的HPWL是中心横坐标极差加纵坐标极差，六个net单位权重各计一次。吸附后六项分别是0、5、1、6、6、14，总和32。</p>
+<p>浮点输入的总HPWL是36，吸附后降到32，但仍有3对重叠。线长改善不意味着合法；同样，较小位移也不能代替row/site/fixed/bounds/non-overlap检查。混合宽度时，左下角距离与中心距离可能不同，不可沿用点pin模型而忽略w/2。</p>
+<h3>网页实验怎样使用</h3>
+<p>两幅板共享一份输入，左边显示原始浮点坐标，右边默认显示完整结果。上一步、下一步和重放展示算法真实处理的前缀；未处理的cell保留原坐标。编辑输入会重算新trace，不继续显示旧数据的结果。</p>
+<p>拖动、方向键和表格提供等价输入；fixed宏D只读。可用键盘连续编辑和检查，减少动态时使用单步完成全部学习。学习题目使用固定教师黄金例，与自由实验状态分开；正确提交才记录完成，查看解析不自动计分。浏览器禁用存储时仍可完整学习。</p>
+<h3>真正CPython与复现</h3>
+<p>Python交互台在独立Worker中运行真正CPython，可编辑、运行、实时重算、查看异常、停止和5秒超时恢复。离开后通过浏览器返回，BFCache恢复会重新建立解释器而保留代码。首次按需加载本地Pyodide，无需安装Python或外部CDN。</p>
+<p>独立参考使用Python原生round与明确的row选择，输出坐标、两种位移、HPWL、重叠对数和最终合法性。练习补完snap_x和nearest_row两个基础函数，完整loop已给出。至少通过半整数、负边界、完整宽度和行等距6项检查，再扩展到教师数据。</p>
+<h3>复杂度与后续课程</h3>
+<p>核心snap对n个cell扫描r个候选行，时间O(nr)，输出O(n)。本教学实现为逐步重放保存每个前缀快照，额外O(n²)存储与复制；完整矩形重叠诊断O(n²)，HPWL还需遍历net成员。不能把核心循环的复杂度当作整套教学界面的全部开销。</p>
+<p>后续需要overlap removal、row packing或Abacus等方法才能处理碰撞。本课不实现这些求解器，不将它们的输出偷偷称作greedy snap的结果。先准确说明当前失败的检查项，再选择下一步工具。</p>
+<h3>来源与迁移</h3>
+<p>基于Yongfu Li / eda-learning的module02-01-greedy-snap和common实现，固定003bcd49e3794e6cfd2680181cdbd347d673ad07，对应issue #36。Python取偶规则、源JS差异、固定D与指标范围都在本站明确说明。</p>
+<p>本课一次消费拥塞试点实际网页与影片打磨后的skill v2.0.0，五文件散列在docs/skill-transfer.json。复用已验证的播放器、Worker与媒体机制，新的算法、图形、讲义和配音针对本课制作。新代码MIT，新教材CC BY 4.0；字体与Pyodide保留原许可。</p></article><article data-reading-lang="en" hidden><h2>Snapped. Still Not Legal: Greedy Site/Row Snap</h2>
+<h3>Problem and learning goals</h3>
+<p>Inputs are fractional lower-left cell positions, widths, chip dimensions, site and row grids, and fixed constraints. Outputs are snapped coordinates. The algorithm aligns each cell and enforces boundaries; it does not reserve room for neighbors, so it does not guarantee non-overlap.</p>
+<p>You should be able to calculate rounding, width-aware clamping and nearest rows, explain halfway ties and fixed macros, distinguish all-cell from movable displacement, and calculate cell-center HPWL. Learn what is missing between snapping and legal placement, rather than merely learning a button.</p>
+<h3>Coordinates and grid</h3>
+<p>Site width is one. The teacher chip is W=12, H=6 with rowH=2 and row bottoms [0,2,4]. Every cell has row-height height; its width comes from the data. Coordinates are lower-left corners, and a rectangle occupies [x,x+w] and [y,y+rowH].</p>
+<p>The diagram’s y-axis points upward. Float inputs may cross rows, exceed a boundary or disagree with a fixed constraint; these are diagnostics, not hidden assumptions. Rectangles use their actual widths and height. Treating cells as points cannot establish non-overlap.</p>
+<h3>Core loop and termination</h3>
+<p>Process each cell once. For movable cells, round x to the nearest integer and clamp it to [0,W-w]. Choose the closest allowed row for y. Fixed macros use the coordinates explicitly stated by their constraints. Stop after all cells; there is no free-space search.</p>
+<pre tabindex="0"><code>for cell in cells:
+    if fixed(cell):
+        output[cell] = locked_position[cell]
+    else:
+        x = clamp(round_even(input.x), 0, W - width[cell])
+        y = first_argmin(rows, abs(row - input.y))
+        output[cell] = (x,y)
+# No overlap search or row packing occurs here.</code></pre>
+<h3>Teacher float golden</h3>
+<pre tabindex="0"><code>Cell  width   before        after    L1
+A       2     (3.7,1.2)     (4,2)    1.1
+B       2     (4.1,1.4)     (4,2)    0.7
+C       2     (5.2,2.3)     (5,2)    0.5
+D       2     (8.4,3.8)     (8,4)    0.6  fixed constraint
+E       1     (0.3,4.6)     (0,4)    0.9
+F       1     (10.2,0.4)    (10,0)   0.6</code></pre>
+<p>A is 0.8 from row two, closer than its 1.2 distance to row zero. B also chooses row two. Both x coordinates become four. C becomes five, and width two makes it intersect both A and B. Site, row, boundary and fixed checks can all pass while non-overlap fails.</p>
+<h3>Halfway ties and cross-language reproduction</h3>
+<p>Python round uses ties-to-even: 0.5→0, 1.5→2, 2.5→2 and 3.5→4. JavaScript Math.round(2.5) gives three. The original language ports therefore need not agree on every boundary. This site explicitly implements Python’s tie rule in JavaScript and cross-checks it independently.</p>
+<p>Row ties are a different rule. The first row in the supplied list wins, so y=1 chooses zero in [0,2,4], and y=3 chooses two. Reordering the list can change a tied result; the default list is fixed in ascending order. Random floats almost never hit exact halves, so explicit boundary tests are necessary.</p>
+<h3>Fit the whole cell inside the boundary</h3>
+<p>A width-w cell on a width-W chip can place its lower-left corner at most at W-w, not W. In the boundary preset, W=6 and w=2. B.x=5.7 rounds to six, then clamps to four; the interval [4,6] fits exactly.</p>
+<p>Negative x also rounds before clamping to zero. Allowed rows must leave room for the full height, with row+rowH≤H. A lower-left corner inside the chip is not enough to prove that its whole rectangle fits.</p>
+<h3>Why three overlapping pairs remain</h3>
+<p>A and B both occupy [4,6]×[2,4], while C occupies [5,7]×[2,4]. The A/B intersection has area four; A/C and B/C each have area two. There are three pairs. Pairwise areas are not a union-area measurement, so do not rename their sum as unique total overlap area.</p>
+<p>Rectangles overlap only when both axis intersections have positive length. Width-one A at (1,0) and B at (2,0) touch but share no positive area. Strict interval comparisons permit that contact. After alignment, this agrees with the source’s same-row check; for fractional inputs, the lesson also displays full two-dimensional intersections to explain cross-row cases.</p>
+<h3>Fixed D and two displacement definitions</h3>
+<p>The fixed constraint says D=(8,4), but starter_float records D=(8.4,3.8). Greedy snap restores the stated lock, rather than optimizing D as a movable cell. Its restoration distance is |8-8.4|+|4-3.8|=0.6.</p>
+<p>The source total_displacement counts every cell even when its API accepts a fixed argument. All-cell L1 is 1.1+0.7+0.5+0.6+0.9+0.6=4.4. Excluding D gives movable-only L1=3.8. Both definitions appear side by side so that the counting scope is explicit.</p>
+<h3>Cell-center HPWL does not prove legality</h3>
+<p>A cell center is (x+w/2,y+rowH/2). Net HPWL is its center-coordinate x range plus y range. Count each of six nets once with unit weight. The final contributions are 0,5,1,6,6,14, totaling 32.</p>
+<p>The float input has total HPWL 36. Snapping lowers it to 32 while leaving three overlapping pairs. Better wirelength does not imply legality, and smaller displacement cannot replace site, row, bounds, fixed and non-overlap checks. For mixed widths, lower-left and center distances can differ; do not silently reuse a point-pin model.</p>
+<h3>Use the live lab</h3>
+<p>Both boards share one input. The left shows the float placement and the right initially shows the complete result. Previous, next and replay expose real processing prefixes; unprocessed cells retain their original coordinates. Editing an input recomputes the trace rather than preserving stale results.</p>
+<p>Drag, arrow keys and the coordinate table provide equivalent input. Fixed D is read-only. Consecutive keyboard edits and inspections remain usable. Reduced-motion mode retains manual stepping. Questions use the fixed teacher golden, independently of free experiments; only correct submissions record completion. Revealing an explanation does not score, and denied local storage does not block learning.</p>
+<h3>Real CPython and reproduction</h3>
+<p>The workspace runs CPython in an independent Worker. Edit, run, use live mode, inspect exceptions, stop, or recover after the five-second limit. Returning through the browser’s back-forward cache rebuilds the interpreter while retaining code. Bundled Pyodide loads on demand; no local Python installation or external CDN is required.</p>
+<p>The independent reference uses native Python round and explicit row selection, returning coordinates, both displacement definitions, HPWL, overlap pairs and legality. Complete snap_x and nearest_row in the exercise; the full loop is supplied. Six primitive checks cover exact halves, negative and full-width boundaries, and equal-distance rows before extending to the teacher data.</p>
+<h3>Complexity and what comes next</h3>
+<p>Core snapping scans r rows for each of n cells: O(nr) time and O(n) output. This teaching implementation additionally stores every prefix, with O(n²) copying/storage. Full rectangle-pair diagnostics take O(n²), and HPWL traverses net members. The core loop’s complexity is not the cost of the whole teaching interface.</p>
+<p>Removing collisions requires later overlap removal, row packing or Abacus-like methods. This lesson does not implement them or relabel their output as greedy snap. Identify the failed checks accurately before choosing the next tool.</p>
+<h3>Sources and skill transfer</h3>
+<p>Based on Yongfu Li’s eda-learning module02-01-greedy-snap and common implementation at commit 003bcd49e3794e6cfd2680181cdbd347d673ad07, corresponding to issue #36. The Python tie rule, original JavaScript difference, fixed-D restoration and metric scope are explicitly documented.</p>
+<p>This lesson consumes frozen skill v2.0.0 once after the congestion pilot’s real website/film iteration. Five file hashes are recorded in docs/skill-transfer.json. It reuses validated player, Worker and media mechanisms with new lesson-specific algorithms, diagrams, notes and narration. New code is MIT, new teaching content CC BY 4.0; fonts and Pyodide retain their licenses.</p></article></section><section id="reference"><h2 data-zh="独立Python参考" data-en="Independent Python reference">独立Python参考</h2><div class="actions"><button data-copy="code-reference" data-zh="复制代码 / 数据" data-en="Copy code / data">复制代码 / 数据</button><a href="../downloads/reference.py" download data-zh="可选：下载原文件" data-en="Optional: download original">可选：下载原文件</a><a id="python-reference" href="../python/" data-zh="在浏览器中运行Python" data-en="Run Python in this browser">在浏览器中运行Python</a></div><pre tabindex="0"><code id="code-reference">&quot;&quot;&quot;Independent greedy snap with Python ties-to-even and cell-center HPWL.
+Coordinates are lower-left. Each cell has chip.rowH height; all nets have weight 1.
+&quot;&quot;&quot;
+import json,math,sys
+
+def measure(data, positions, origin=None):
+    origin=data[&#x27;placement&#x27;] if origin is None else origin
+    widths={c[&#x27;id&#x27;]:c[&#x27;width&#x27;] for c in data[&#x27;cells&#x27;]};fixed={c[&#x27;id&#x27;]:c for c in data.get(&#x27;fixed_macros&#x27;,[])};ids=list(widths);chip=data[&#x27;chip&#x27;]
+    aligned=lambda a,b:abs(a-b)&lt;1e-9
+    site=sum(aligned(p[&#x27;x&#x27;],round(p[&#x27;x&#x27;])) for p in positions.values())
+    rows=sum(any(aligned(p[&#x27;y&#x27;],r) for r in chip[&#x27;rows&#x27;]) for p in positions.values())
+    bounds=sum(p[&#x27;x&#x27;]&gt;=-1e-9 and p[&#x27;x&#x27;]+widths[k]&lt;=chip[&#x27;W&#x27;]+1e-9 and p[&#x27;y&#x27;]&gt;=-1e-9 and p[&#x27;y&#x27;]+chip[&#x27;rowH&#x27;]&lt;=chip[&#x27;H&#x27;]+1e-9 for k,p in positions.items())
+    locked=sum(aligned(positions[k][&#x27;x&#x27;],v[&#x27;x&#x27;]) and aligned(positions[k][&#x27;y&#x27;],v[&#x27;y&#x27;]) for k,v in fixed.items())
+    overlaps=[]
+    for i,a in enumerate(ids):
+        for b in ids[i+1:]:
+            pa,pb=positions[a],positions[b]
+            dx=min(pa[&#x27;x&#x27;]+widths[a],pb[&#x27;x&#x27;]+widths[b])-max(pa[&#x27;x&#x27;],pb[&#x27;x&#x27;]);dy=min(pa[&#x27;y&#x27;]+chip[&#x27;rowH&#x27;],pb[&#x27;y&#x27;]+chip[&#x27;rowH&#x27;])-max(pa[&#x27;y&#x27;],pb[&#x27;y&#x27;])
+            if dx&gt;1e-9 and dy&gt;1e-9:overlaps.append({&#x27;a&#x27;:a,&#x27;b&#x27;:b,&#x27;area&#x27;:dx*dy})
+    distances={k:abs(p[&#x27;x&#x27;]-origin[k][&#x27;x&#x27;])+abs(p[&#x27;y&#x27;]-origin[k][&#x27;y&#x27;]) for k,p in positions.items()}
+    hpwl=0
+    for net in data[&#x27;nets&#x27;]:
+        if not net:continue
+        xs=[positions[k][&#x27;x&#x27;]+widths[k]/2 for k in net];ys=[positions[k][&#x27;y&#x27;]+chip[&#x27;rowH&#x27;]/2 for k in net]
+        hpwl+=max(xs)-min(xs)+max(ys)-min(ys)
+    return {&#x27;displacement&#x27;:sum(distances.values()),&#x27;movableDisplacement&#x27;:sum(v for k,v in distances.items() if k not in fixed),&#x27;hpwl&#x27;:hpwl,&#x27;overlaps&#x27;:overlaps,&#x27;siteAligned&#x27;:site,&#x27;rowAligned&#x27;:rows,&#x27;inBounds&#x27;:bounds,&#x27;fixedAligned&#x27;:locked,&#x27;legal&#x27;:site==len(ids) and rows==len(ids) and bounds==len(ids) and locked==len(fixed) and not overlaps}
+
+def greedy_snap(data):
+    chip=data[&#x27;chip&#x27;];fixed={c[&#x27;id&#x27;]:c for c in data.get(&#x27;fixed_macros&#x27;,[])};result={}
+    for cell in data[&#x27;cells&#x27;]:
+        key=cell[&#x27;id&#x27;];p=data[&#x27;placement&#x27;][key]
+        if not all(math.isfinite(p[a]) for a in [&#x27;x&#x27;,&#x27;y&#x27;]):raise ValueError(&#x27;coordinate&#x27;)
+        if key in fixed:result[key]={&#x27;x&#x27;:fixed[key][&#x27;x&#x27;],&#x27;y&#x27;:fixed[key][&#x27;y&#x27;]}
+        else:
+            x=max(0,min(chip[&#x27;W&#x27;]-cell[&#x27;width&#x27;],round(p[&#x27;x&#x27;])))
+            y=min(chip[&#x27;rows&#x27;],key=lambda r:abs(r-p[&#x27;y&#x27;]))
+            result[key]={&#x27;x&#x27;:x,&#x27;y&#x27;:y}
+    return {&#x27;positions&#x27;:result,&#x27;metrics&#x27;:measure(data,result)}
+
+if __name__==&#x27;__main__&#x27;:print(json.dumps([greedy_snap(d) for d in json.load(sys.stdin)]))
+</code></pre></section><section id="exercise"><h2 data-zh="自己补全的练习" data-en="Complete the exercise">自己补全的练习</h2><div class="actions"><button data-copy="code-exercise" data-zh="复制代码 / 数据" data-en="Copy code / data">复制代码 / 数据</button><a href="../downloads/exercise.py" download data-zh="可选：下载原文件" data-en="Optional: download original">可选：下载原文件</a><a id="python-exercise" href="../python/" data-zh="在浏览器中运行Python" data-en="Run Python in this browser">在浏览器中运行Python</a></div><pre tabindex="0"><code id="code-exercise"># Implement the two primitives; Python round uses ties-to-even.
+# 完成两个基础函数；Python round采用等距取偶。
+def snap_x(x, width, chip_width):
+    # Round first, then clamp the entire width. / 先取整，再为完整宽度留空间。
+    raise NotImplementedError(&quot;round and clamp&quot;)
+
+def nearest_row(y, rows):
+    # Keep the first row on an equal-distance tie. / 等距时保留列表第一行。
+    raise NotImplementedError(&quot;nearest row&quot;)
+
+assert snap_x(2.5,1,6)==2
+assert snap_x(3.5,1,6)==4
+assert snap_x(5.7,2,6)==4
+assert snap_x(-0.6,2,6)==0
+assert nearest_row(1,[0,2,4])==0
+assert nearest_row(1.2,[0,2,4])==2
+print(&quot;6 checks passed / 6项检查通过&quot;)
+
+def greedy_snap(data):
+    locked={c[&quot;id&quot;]:c for c in data.get(&quot;fixed_macros&quot;,[])}
+    result={}
+    for cell in data[&quot;cells&quot;]:
+        key=cell[&quot;id&quot;];p=data[&quot;placement&quot;][key]
+        if key in locked:result[key]={&quot;x&quot;:locked[key][&quot;x&quot;],&quot;y&quot;:locked[key][&quot;y&quot;]}
+        else:result[key]={&quot;x&quot;:snap_x(p[&quot;x&quot;],cell[&quot;width&quot;],data[&quot;chip&quot;][&quot;W&quot;]),&quot;y&quot;:nearest_row(p[&quot;y&quot;],data[&quot;chip&quot;][&quot;rows&quot;])}
+    return result
+</code></pre></section><section id="data"><h2 data-zh="可复现情境数据" data-en="Reproducible fixtures">可复现情境数据</h2><div class="actions"><button data-copy="code-data" data-zh="复制代码 / 数据" data-en="Copy code / data">复制代码 / 数据</button><a href="../downloads/examples.json" download data-zh="可选：下载原文件" data-en="Optional: download original">可选：下载原文件</a><a id="python-data" href="../python/" data-zh="在浏览器中运行Python" data-en="Run Python in this browser">在浏览器中运行Python</a></div><pre tabindex="0"><code id="code-data">{
+  &quot;teacher&quot;: {
+    &quot;chip&quot;: {
+      &quot;W&quot;: 12,
+      &quot;H&quot;: 6,
+      &quot;siteW&quot;: 1,
+      &quot;rowH&quot;: 2,
+      &quot;rows&quot;: [
+        0,
+        2,
+        4
+      ]
+    },
+    &quot;cells&quot;: [
+      {
+        &quot;id&quot;: &quot;A&quot;,
+        &quot;width&quot;: 2
+      },
+      {
+        &quot;id&quot;: &quot;B&quot;,
+        &quot;width&quot;: 2
+      },
+      {
+        &quot;id&quot;: &quot;C&quot;,
+        &quot;width&quot;: 2
+      },
+      {
+        &quot;id&quot;: &quot;D&quot;,
+        &quot;width&quot;: 2
+      },
+      {
+        &quot;id&quot;: &quot;E&quot;,
+        &quot;width&quot;: 1
+      },
+      {
+        &quot;id&quot;: &quot;F&quot;,
+        &quot;width&quot;: 1
+      }
+    ],
+    &quot;nets&quot;: [
+      [
+        &quot;A&quot;,
+        &quot;B&quot;
+      ],
+      [
+        &quot;C&quot;,
+        &quot;D&quot;
+      ],
+      [
+        &quot;A&quot;,
+        &quot;C&quot;
+      ],
+      [
+        &quot;B&quot;,
+        &quot;D&quot;
+      ],
+      [
+        &quot;A&quot;,
+        &quot;B&quot;,
+        &quot;C&quot;,
+        &quot;D&quot;
+      ],
+      [
+        &quot;E&quot;,
+        &quot;F&quot;
+      ]
+    ],
+    &quot;fixed_macros&quot;: [
+      {
+        &quot;id&quot;: &quot;D&quot;,
+        &quot;x&quot;: 8,
+        &quot;y&quot;: 4,
+        &quot;width&quot;: 2,
+        &quot;fixed&quot;: true
+      }
+    ],
+    &quot;starter_illegal&quot;: {
+      &quot;A&quot;: {
+        &quot;x&quot;: 4,
+        &quot;y&quot;: 2
+      },
+      &quot;B&quot;: {
+        &quot;x&quot;: 4,
+        &quot;y&quot;: 2
+      },
+      &quot;C&quot;: {
+        &quot;x&quot;: 4,
+        &quot;y&quot;: 2
+      },
+      &quot;D&quot;: {
+        &quot;x&quot;: 8,
+        &quot;y&quot;: 4
+      },
+      &quot;E&quot;: {
+        &quot;x&quot;: 0,
+        &quot;y&quot;: 4
+      },
+      &quot;F&quot;: {
+        &quot;x&quot;: 10,
+        &quot;y&quot;: 0
+      }
+    },
+    &quot;starter_float&quot;: {
+      &quot;A&quot;: {
+        &quot;x&quot;: 3.7,
+        &quot;y&quot;: 1.2
+      },
+      &quot;B&quot;: {
+        &quot;x&quot;: 4.1,
+        &quot;y&quot;: 1.4
+      },
+      &quot;C&quot;: {
+        &quot;x&quot;: 5.2,
+        &quot;y&quot;: 2.3
+      },
+      &quot;D&quot;: {
+        &quot;x&quot;: 8.4,
+        &quot;y&quot;: 3.8
+      },
+      &quot;E&quot;: {
+        &quot;x&quot;: 0.3,
+        &quot;y&quot;: 4.6
+      },
+      &quot;F&quot;: {
+        &quot;x&quot;: 10.2,
+        &quot;y&quot;: 0.4
+      }
+    },
+    &quot;notes&quot;: &quot;W=12 sites, H=6 (3 rows), siteW=1, rowH=2, row bottoms y=0,2,4. starter_illegal: A,B,C overlap on middle row; D fixed macro at (8,4). starter_float: global-place floats for greedy snap.&quot;,
+    &quot;placement&quot;: {
+      &quot;A&quot;: {
+        &quot;x&quot;: 3.7,
+        &quot;y&quot;: 1.2
+      },
+      &quot;B&quot;: {
+        &quot;x&quot;: 4.1,
+        &quot;y&quot;: 1.4
+      },
+      &quot;C&quot;: {
+        &quot;x&quot;: 5.2,
+        &quot;y&quot;: 2.3
+      },
+      &quot;D&quot;: {
+        &quot;x&quot;: 8.4,
+        &quot;y&quot;: 3.8
+      },
+      &quot;E&quot;: {
+        &quot;x&quot;: 0.3,
+        &quot;y&quot;: 4.6
+      },
+      &quot;F&quot;: {
+        &quot;x&quot;: 10.2,
+        &quot;y&quot;: 0.4
+      }
+    }
+  },
+  &quot;collision&quot;: {
+    &quot;chip&quot;: {
+      &quot;W&quot;: 12,
+      &quot;H&quot;: 6,
+      &quot;siteW&quot;: 1,
+      &quot;rowH&quot;: 2,
+      &quot;rows&quot;: [
+        0,
+        2,
+        4
+      ]
+    },
+    &quot;cells&quot;: [
+      {
+        &quot;id&quot;: &quot;A&quot;,
+        &quot;width&quot;: 2
+      },
+      {
+        &quot;id&quot;: &quot;B&quot;,
+        &quot;width&quot;: 2
+      },
+      {
+        &quot;id&quot;: &quot;C&quot;,
+        &quot;width&quot;: 2
+      },
+      {
+        &quot;id&quot;: &quot;D&quot;,
+        &quot;width&quot;: 2
+      },
+      {
+        &quot;id&quot;: &quot;E&quot;,
+        &quot;width&quot;: 1
+      },
+      {
+        &quot;id&quot;: &quot;F&quot;,
+        &quot;width&quot;: 1
+      }
+    ],
+    &quot;nets&quot;: [
+      [
+        &quot;A&quot;,
+        &quot;B&quot;
+      ],
+      [
+        &quot;C&quot;,
+        &quot;D&quot;
+      ],
+      [
+        &quot;A&quot;,
+        &quot;C&quot;
+      ],
+      [
+        &quot;B&quot;,
+        &quot;D&quot;
+      ],
+      [
+        &quot;A&quot;,
+        &quot;B&quot;,
+        &quot;C&quot;,
+        &quot;D&quot;
+      ],
+      [
+        &quot;E&quot;,
+        &quot;F&quot;
+      ]
+    ],
+    &quot;fixed_macros&quot;: [
+      {
+        &quot;id&quot;: &quot;D&quot;,
+        &quot;x&quot;: 8,
+        &quot;y&quot;: 4,
+        &quot;width&quot;: 2,
+        &quot;fixed&quot;: true
+      }
+    ],
+    &quot;starter_illegal&quot;: {
+      &quot;A&quot;: {
+        &quot;x&quot;: 4,
+        &quot;y&quot;: 2
+      },
+      &quot;B&quot;: {
+        &quot;x&quot;: 4,
+        &quot;y&quot;: 2
+      },
+      &quot;C&quot;: {
+        &quot;x&quot;: 4,
+        &quot;y&quot;: 2
+      },
+      &quot;D&quot;: {
+        &quot;x&quot;: 8,
+        &quot;y&quot;: 4
+      },
+      &quot;E&quot;: {
+        &quot;x&quot;: 0,
+        &quot;y&quot;: 4
+      },
+      &quot;F&quot;: {
+        &quot;x&quot;: 10,
+        &quot;y&quot;: 0
+      }
+    },
+    &quot;starter_float&quot;: {
+      &quot;A&quot;: {
+        &quot;x&quot;: 3.7,
+        &quot;y&quot;: 1.2
+      },
+      &quot;B&quot;: {
+        &quot;x&quot;: 4.1,
+        &quot;y&quot;: 1.4
+      },
+      &quot;C&quot;: {
+        &quot;x&quot;: 5.2,
+        &quot;y&quot;: 2.3
+      },
+      &quot;D&quot;: {
+        &quot;x&quot;: 8.4,
+        &quot;y&quot;: 3.8
+      },
+      &quot;E&quot;: {
+        &quot;x&quot;: 0.3,
+        &quot;y&quot;: 4.6
+      },
+      &quot;F&quot;: {
+        &quot;x&quot;: 10.2,
+        &quot;y&quot;: 0.4
+      }
+    },
+    &quot;notes&quot;: &quot;W=12 sites, H=6 (3 rows), siteW=1, rowH=2, row bottoms y=0,2,4. starter_illegal: A,B,C overlap on middle row; D fixed macro at (8,4). starter_float: global-place floats for greedy snap.&quot;,
+    &quot;placement&quot;: {
+      &quot;A&quot;: {
+        &quot;x&quot;: 4,
+        &quot;y&quot;: 2
+      },
+      &quot;B&quot;: {
+        &quot;x&quot;: 4,
+        &quot;y&quot;: 2
+      },
+      &quot;C&quot;: {
+        &quot;x&quot;: 4,
+        &quot;y&quot;: 2
+      },
+      &quot;D&quot;: {
+        &quot;x&quot;: 8,
+        &quot;y&quot;: 4
+      },
+      &quot;E&quot;: {
+        &quot;x&quot;: 0,
+        &quot;y&quot;: 4
+      },
+      &quot;F&quot;: {
+        &quot;x&quot;: 10,
+        &quot;y&quot;: 0
+      }
+    }
+  },
+  &quot;ties&quot;: {
+    &quot;chip&quot;: {
+      &quot;W&quot;: 6,
+      &quot;H&quot;: 4,
+      &quot;siteW&quot;: 1,
+      &quot;rowH&quot;: 2,
+      &quot;rows&quot;: [
+        0,
+        2
+      ]
+    },
+    &quot;cells&quot;: [
+      {
+        &quot;id&quot;: &quot;A&quot;,
+        &quot;width&quot;: 1
+      },
+      {
+        &quot;id&quot;: &quot;B&quot;,
+        &quot;width&quot;: 1
+      }
+    ],
+    &quot;nets&quot;: [
+      [
+        &quot;A&quot;,
+        &quot;B&quot;
+      ]
+    ],
+    &quot;fixed_macros&quot;: [],
+    &quot;placement&quot;: {
+      &quot;A&quot;: {
+        &quot;x&quot;: 2.5,
+        &quot;y&quot;: 1
+      },
+      &quot;B&quot;: {
+        &quot;x&quot;: 3.5,
+        &quot;y&quot;: 1
+      }
+    }
+  },
+  &quot;touching&quot;: {
+    &quot;chip&quot;: {
+      &quot;W&quot;: 6,
+      &quot;H&quot;: 4,
+      &quot;siteW&quot;: 1,
+      &quot;rowH&quot;: 2,
+      &quot;rows&quot;: [
+        0,
+        2
+      ]
+    },
+    &quot;cells&quot;: [
+      {
+        &quot;id&quot;: &quot;A&quot;,
+        &quot;width&quot;: 1
+      },
+      {
+        &quot;id&quot;: &quot;B&quot;,
+        &quot;width&quot;: 1
+      }
+    ],
+    &quot;nets&quot;: [
+      [
+        &quot;A&quot;,
+        &quot;B&quot;
+      ]
+    ],
+    &quot;fixed_macros&quot;: [],
+    &quot;placement&quot;: {
+      &quot;A&quot;: {
+        &quot;x&quot;: 1,
+        &quot;y&quot;: 0
+      },
+      &quot;B&quot;: {
+        &quot;x&quot;: 2,
+        &quot;y&quot;: 0
+      }
+    }
+  },
+  &quot;clamp&quot;: {
+    &quot;chip&quot;: {
+      &quot;W&quot;: 6,
+      &quot;H&quot;: 4,
+      &quot;siteW&quot;: 1,
+      &quot;rowH&quot;: 2,
+      &quot;rows&quot;: [
+        0,
+        2
+      ]
+    },
+    &quot;cells&quot;: [
+      {
+        &quot;id&quot;: &quot;A&quot;,
+        &quot;width&quot;: 2
+      },
+      {
+        &quot;id&quot;: &quot;B&quot;,
+        &quot;width&quot;: 2
+      }
+    ],
+    &quot;nets&quot;: [
+      [
+        &quot;A&quot;,
+        &quot;B&quot;
+      ]
+    ],
+    &quot;fixed_macros&quot;: [],
+    &quot;placement&quot;: {
+      &quot;A&quot;: {
+        &quot;x&quot;: -0.6,
+        &quot;y&quot;: 0.2
+      },
+      &quot;B&quot;: {
+        &quot;x&quot;: 5.7,
+        &quot;y&quot;: 2.4
+      }
+    }
+  }
+}
+</code></pre></section><section id="transcript-zh"><h2>对齐了，还不一定合法</h2>
+<h3>00:00:00.000 · 对齐了，为什么仍不合法？</h3>
+<p>全局布局留下了浮点坐标。把单元推到最近的格点与行，看起来像是最后一步。真的是这样吗？</p>
+<p>看这六个单元。吸附后，它们都对齐了，但A和B选择同一点，C也与它们相交。三个重叠对仍然存在。</p>
+<h3>00:00:22.033 · 第一步：把x吸到最近site</h3>
+<p>本课site宽度为一。A的x是三点七，最近的整数是四；B的四点一，也会选择四。</p>
+<p>每个单元独立做决定。取整规则本身没有询问：这个位置是否已经被别人占用？</p>
+<h3>00:00:42.233 · 第二步：找最近的行底</h3>
+<p>合法行底是零、二、四。A的y是一点二，到行二的距离零点八，小于到行零的一点二，因此选择二。</p>
+<p>y坐标表示单元左下角，不是中心。本课单元高度等于行高二，所以行底加上完整高度必须留在芯片内。</p>
+<h3>00:01:05.033 · 同一个位置，不能装下两个单元</h3>
+<p>A和B最终都在四、二，C在五、二。三个单元的宽度都是二，所以A与B、A与C、B与C都重叠。</p>
+<p>这是greedy snap的核心限制：它只量化坐标。site和row全部对齐，并不意味着布局通过非重叠检查。</p>
+<h3>00:01:29.667 · 右边界，必须给整个宽度留位置</h3>
+<p>取整之后，还要把x限制在零到W减w之间。芯片宽六、单元宽二时，最右侧的合法左下角只能到四。</p>
+<p>不能只检查x小于芯片宽度。一个左下角在五的宽二单元，右边缘已经越过六。</p>
+<h3>00:01:51.433 · 固定宏，服从锁定约束</h3>
+<p>教师数据把D锁在八、四，但浮点草图记录的是八点四、三点八。算法按约束恢复D的位置。</p>
+<p>这不是让固定宏参与优化。恢复产生零点六的坐标差，是否计入位移，必须明确说明。</p>
+<h3>00:02:15.467 · 两个位移口径，不要混成一个答案</h3>
+<p>逐单元累加左下角的曼哈顿距离，全体L1位移是四点四。其中恢复固定D，贡献零点六。</p>
+<p>只统计可移动单元时，结果是三点八。两者都可以报告，但必须写出统计了谁。</p>
+<h3>00:02:36.267 · 线长短，不是合法性的证明</h3>
+<p>本课HPWL使用cell中心：x加宽度的一半，y加行高的一半。六个net各计一次，总HPWL是三十二。</p>
+<p>HPWL衡量连接，不检查重叠。即使一个指标看起来不错，也不能跳过site、row、边界、fixed和非重叠检查。</p>
+<h3>00:03:01.700 · 恰好一半时，规则必须写出来</h3>
+<p>Python采用等距取偶：二点五变成二，三点五变成四。JS的Math.round对二点五会给三。</p>
+<p>本站在两种语言中显式统一取偶。最近行若也等距，就选择rows列表先出现的一行。边界样例不能被随机测试代替。</p>
+<h3>00:03:25.767 · 边缘接触，不是正面积重叠</h3>
+<p>宽一的A放在x一，宽一的B放在x二。它们刚好接触边缘，没有共同覆盖的正面积。</p>
+<p>因此检查区间相交时要用严格不等式。把接触也当成重叠，会错误地拒绝本来可用的相邻位置。</p>
+<h3>00:03:45.767 · 吸附是第一步，不是完整合法化器</h3>
+<p>真正消除碰撞，还需要后续行内packing、重叠移除或Abacus等方法。本课只解释greedy snap，不偷偷加入另一种求解器。</p>
+<p>观察所有失败的检查项，再决定下一步。一个已经对齐却仍重叠的布局，正是有价值的教学反例。</p>
+<h3>00:04:12.967 · 现在，自己吸附并核对一次</h3>
+<p>在网页中编辑一个浮点坐标，逐步看目标位置，再试半整数、越界和边缘接触。不要只记住按钮，要能手算。</p>
+<p>最后在真实Python中重算同一份数据。记住：对齐、位移、线长和合法性，是四个需要分开解释的问题。</p><p><a href="../media/lesson.zh.mp4">MP4</a> · <a href="../media/lesson.zh.bilingual.vtt" download>中文 + English VTT</a></p></section><section id="transcript-en"><h2>Snapped. Still Not Legal.</h2>
+<h3>00:00:00.000 · Snapped, but still not legal?</h3>
+<p>Global placement leaves fractional coordinates. Moving cells to the nearest sites and rows looks like the last step. Is it really?</p>
+<p>Look at these six cells. After snapping, all align, but A and B choose the same location and C intersects them too. Three overlapping pairs remain.</p>
+<h3>00:00:22.033 · First: snap x to the nearest site</h3>
+<p>The site width is one. A has x equal to three point seven, so its nearest integer is four. B at four point one also chooses four.</p>
+<p>Every cell makes its decision independently. The rounding rule never asks whether another cell has already claimed that location.</p>
+<h3>00:00:42.233 · Next: choose the nearest row bottom</h3>
+<p>Allowed row bottoms are zero, two and four. A at y equal to one point two is point eight from row two, closer than one point two from row zero.</p>
+<p>The y coordinate is the lower-left corner, not the center. Cell height equals row height two, so the row bottom plus the full height must remain inside the chip.</p>
+<h3>00:01:05.033 · One location cannot hold two cells</h3>
+<p>A and B both finish at four, two, while C finishes at five, two. Each has width two, so A/B, A/C and B/C all overlap.</p>
+<p>This is the central limitation of greedy snap: it quantizes coordinates only. Perfect site and row alignment does not imply non-overlapping placement.</p>
+<h3>00:01:29.667 · The boundary must fit the full cell width</h3>
+<p>After rounding, clamp x between zero and W minus w. On a width-six chip, a width-two cell can place its lower-left corner no farther right than four.</p>
+<p>Checking x against the chip width alone is insufficient. A width-two cell whose lower-left corner is at five already extends beyond six.</p>
+<h3>00:01:51.433 · Fixed macros follow their locked constraints</h3>
+<p>The teacher data locks D at eight, four, although the float draft records eight point four, three point eight. The algorithm restores D to its constraint position.</p>
+<p>This does not optimize a fixed macro. Restoring the constraint creates a coordinate difference of point six, which must be explicitly included or excluded from displacement.</p>
+<h3>00:02:15.467 · Two displacement definitions, two answers</h3>
+<p>Summing Manhattan distances between lower-left corners gives all-cell L1 displacement four point four. Fixed D’s constraint restoration contributes point six.</p>
+<p>Counting only movable cells gives three point eight. Both quantities can be reported, but you must state which cells were counted.</p>
+<h3>00:02:36.267 · Short wirelength does not prove legality</h3>
+<p>HPWL uses cell centers: x plus half the width, and y plus half the row height. Counting each of six nets once gives total HPWL thirty-two.</p>
+<p>HPWL measures connectivity, not overlap. An attractive metric cannot replace site, row, bounds, fixed-constraint and non-overlap checks.</p>
+<h3>00:03:01.700 · Write down what happens exactly halfway</h3>
+<p>Python uses ties-to-even: two point five becomes two, and three point five becomes four. JavaScript’s Math.round gives three for two point five.</p>
+<p>This site explicitly uses ties-to-even in both languages. Equal row distances choose the first listed row. Random tests do not replace exact boundary cases.</p>
+<h3>00:03:25.767 · Touching edges are not positive-area overlap</h3>
+<p>Place width-one A at x equal to one and width-one B at two. Their edges touch, but they share no positive area.</p>
+<p>Use strict inequalities for interval intersection. Treating contact as overlap would wrongly reject valid adjacent sites.</p>
+<h3>00:03:45.767 · Snapping is a first step, not a complete legalizer</h3>
+<p>Removing collisions requires later row packing, overlap removal or a method such as Abacus. This lesson explains greedy snap without secretly adding another solver.</p>
+<p>Inspect every failed check before choosing the next step. An aligned placement that still overlaps is a useful counterexample, not a successful legalization result.</p>
+<h3>00:04:12.967 · Now snap a placement and audit it yourself</h3>
+<p>Edit a fractional coordinate in the lab, inspect its target step by step, then try halfway values, boundary clamps and edge contact. Learn the rule, not just the button.</p>
+<p>Finally, recompute the same data in real Python. Alignment, displacement, wirelength and legality are four questions that must be explained separately.</p><p><a href="../media/lesson.en.mp4">MP4</a> · <a href="../media/lesson.en.bilingual.vtt" download>中文 + English VTT</a></p></section><section id="reproduce"><h2 data-zh="复现与验证" data-en="Reproduce and verify">复现与验证</h2><p data-zh="源码、固定上游、引擎、独立Python、冻结音频与语义分镜都保存在指定GitHub仓库。使用Python媒体依赖环境运行下列命令；只有语音文字改变才需要重新调用TTS。" data-en="Source, pinned upstream references, engine, independent Python, frozen audio and semantic storyboards are in the GitHub repository. Use the media Python environment for the commands below. TTS is needed again only when speech changes."></p><pre tabindex="0"><code>node --test tests/*.test.mjs
+node scripts/export-data.mjs
+python scripts/speech.py
+python scripts/render-film.py --stills
+python scripts/render-film.py
+python scripts/render-film.py --lang en
+python scripts/build_reading.py
+python scripts/check-site.py
+python scripts/verify-media.py</code></pre><p data-zh="影片共277.03秒，12个语义场景，两种语言独立配音，共用经过阅读时间检查的时间轴。自动媒体检查不等于完整人工听审。" data-en="The film has 12 semantic scenes over 277.03 seconds, with separate narration and a shared timeline checked for caption reading time. Automated media checks are not a complete human listening review."></p><a href="https://github.com/FanqinZeng/eda-legalization-lesson04">GitHub / source / licenses</a></section><p id="copy-status" role="status"></p></main><footer class="wrap">LEGALIZATION / 04 <a id="footer-back" href="../" data-zh="返回实验" data-en="Back to the lab">返回实验</a></footer><script type="module" src="../assets/reading.mjs"></script></body></html>

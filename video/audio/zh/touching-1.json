@@ -1,0 +1,6 @@
+{
+  "digest": "48c36e99d6dc48c2adf6a6ac68135d8efe5e3654ed220535508b0d10de2bc5c0",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "因此检查区间相交时要用严格不等式。把接触也当成重叠，会错误地拒绝本来可用的相邻位置。",
+  "semantic_id": "touching-1"
+}

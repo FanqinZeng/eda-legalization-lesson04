@@ -1,0 +1,6 @@
+{
+  "digest": "10f3246010885aec3e1e5d510b1ccdeefe2ea06ad2747a9ae81267f000a9bb48",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "不能只检查x小于芯片宽度。一个左下角在五的宽二单元，右边缘已经越过六。",
+  "semantic_id": "clamp-1"
+}

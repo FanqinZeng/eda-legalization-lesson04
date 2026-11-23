@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "duration": 277.0333333333333,
+  "files": [
+    {
+      "lang": "zh",
+      "bytes": 5625974,
+      "sha256": "f8dac2a415e1f100f1e4fff0999f7e5661e987ac9fdfb17c917f10476b2dcf73",
+      "mean_volume_db": -20.5,
+      "peak_db": -2.2,
+      "full_decode": "passed",
+      "video": "1920x1080 / 30fps / H.264",
+      "audio": "AAC",
+      "embedded_subtitles": "mov_text / Chinese + English",
+      "representative_frame": ".qa/encoded-zh.jpg"
+    },
+    {
+      "lang": "en",
+      "bytes": 5587722,
+      "sha256": "184da00318193a4ddcdba073c1dac386cee680c78a498f7a917d2c1e503e079a",
+      "mean_volume_db": -22.1,
+      "peak_db": -1.0,
+      "full_decode": "passed",
+      "video": "1920x1080 / 30fps / H.264",
+      "audio": "AAC",
+      "embedded_subtitles": "mov_text / Chinese + English",
+      "representative_frame": ".qa/encoded-en.jpg"
+    }
+  ],
+  "caption_units": 24,
+  "human_full_listening": "not performed",
+  "physical_touchscreen": "not tested"
+}

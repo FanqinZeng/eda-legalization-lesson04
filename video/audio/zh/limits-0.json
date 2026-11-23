@@ -1,0 +1,6 @@
+{
+  "digest": "bac3bea09e06d084f4c7b84b45c7dd90bee689d7719301751933242d58953c07",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "真正消除碰撞，还需要后续行内packing、重叠移除或Abacus等方法。本课只解释greedy snap，不偷偷加入另一种求解器。",
+  "semantic_id": "limits-0"
+}

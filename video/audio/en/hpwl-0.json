@@ -1,0 +1,6 @@
+{
+  "digest": "0b731fc1dc84267de294e6313c699caef2c30d677e9672207c041040a00ff0c4",
+  "voice": "en-US-JennyNeural",
+  "text": "HPWL uses cell centers: x plus half the width, and y plus half the row height. Counting each of six nets once gives total HPWL thirty-two.",
+  "semantic_id": "hpwl-0"
+}

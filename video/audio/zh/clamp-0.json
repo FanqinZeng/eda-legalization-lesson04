@@ -1,0 +1,6 @@
+{
+  "digest": "85aff5cd24768013956db1d1cc1c9c6976b23a81ba898463a3bb52ee4d3bd129",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "取整之后，还要把x限制在零到W减w之间。芯片宽六、单元宽二时，最右侧的合法左下角只能到四。",
+  "semantic_id": "clamp-0"
+}

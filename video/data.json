@@ -1,0 +1,1385 @@
+{
+  "presets": {
+    "teacher": {
+      "chip": {
+        "W": 12,
+        "H": 6,
+        "siteW": 1,
+        "rowH": 2,
+        "rows": [
+          0,
+          2,
+          4
+        ]
+      },
+      "cells": [
+        {
+          "id": "A",
+          "width": 2
+        },
+        {
+          "id": "B",
+          "width": 2
+        },
+        {
+          "id": "C",
+          "width": 2
+        },
+        {
+          "id": "D",
+          "width": 2
+        },
+        {
+          "id": "E",
+          "width": 1
+        },
+        {
+          "id": "F",
+          "width": 1
+        }
+      ],
+      "nets": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "E",
+          "F"
+        ]
+      ],
+      "fixed_macros": [
+        {
+          "id": "D",
+          "x": 8,
+          "y": 4,
+          "width": 2,
+          "fixed": true
+        }
+      ],
+      "starter_illegal": {
+        "A": {
+          "x": 4,
+          "y": 2
+        },
+        "B": {
+          "x": 4,
+          "y": 2
+        },
+        "C": {
+          "x": 4,
+          "y": 2
+        },
+        "D": {
+          "x": 8,
+          "y": 4
+        },
+        "E": {
+          "x": 0,
+          "y": 4
+        },
+        "F": {
+          "x": 10,
+          "y": 0
+        }
+      },
+      "starter_float": {
+        "A": {
+          "x": 3.7,
+          "y": 1.2
+        },
+        "B": {
+          "x": 4.1,
+          "y": 1.4
+        },
+        "C": {
+          "x": 5.2,
+          "y": 2.3
+        },
+        "D": {
+          "x": 8.4,
+          "y": 3.8
+        },
+        "E": {
+          "x": 0.3,
+          "y": 4.6
+        },
+        "F": {
+          "x": 10.2,
+          "y": 0.4
+        }
+      },
+      "notes": "W=12 sites, H=6 (3 rows), siteW=1, rowH=2, row bottoms y=0,2,4. starter_illegal: A,B,C overlap on middle row; D fixed macro at (8,4). starter_float: global-place floats for greedy snap.",
+      "placement": {
+        "A": {
+          "x": 3.7,
+          "y": 1.2
+        },
+        "B": {
+          "x": 4.1,
+          "y": 1.4
+        },
+        "C": {
+          "x": 5.2,
+          "y": 2.3
+        },
+        "D": {
+          "x": 8.4,
+          "y": 3.8
+        },
+        "E": {
+          "x": 0.3,
+          "y": 4.6
+        },
+        "F": {
+          "x": 10.2,
+          "y": 0.4
+        }
+      }
+    },
+    "collision": {
+      "chip": {
+        "W": 12,
+        "H": 6,
+        "siteW": 1,
+        "rowH": 2,
+        "rows": [
+          0,
+          2,
+          4
+        ]
+      },
+      "cells": [
+        {
+          "id": "A",
+          "width": 2
+        },
+        {
+          "id": "B",
+          "width": 2
+        },
+        {
+          "id": "C",
+          "width": 2
+        },
+        {
+          "id": "D",
+          "width": 2
+        },
+        {
+          "id": "E",
+          "width": 1
+        },
+        {
+          "id": "F",
+          "width": 1
+        }
+      ],
+      "nets": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "C",
+          "D"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "D"
+        ],
+        [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        [
+          "E",
+          "F"
+        ]
+      ],
+      "fixed_macros": [
+        {
+          "id": "D",
+          "x": 8,
+          "y": 4,
+          "width": 2,
+          "fixed": true
+        }
+      ],
+      "starter_illegal": {
+        "A": {
+          "x": 4,
+          "y": 2
+        },
+        "B": {
+          "x": 4,
+          "y": 2
+        },
+        "C": {
+          "x": 4,
+          "y": 2
+        },
+        "D": {
+          "x": 8,
+          "y": 4
+        },
+        "E": {
+          "x": 0,
+          "y": 4
+        },
+        "F": {
+          "x": 10,
+          "y": 0
+        }
+      },
+      "starter_float": {
+        "A": {
+          "x": 3.7,
+          "y": 1.2
+        },
+        "B": {
+          "x": 4.1,
+          "y": 1.4
+        },
+        "C": {
+          "x": 5.2,
+          "y": 2.3
+        },
+        "D": {
+          "x": 8.4,
+          "y": 3.8
+        },
+        "E": {
+          "x": 0.3,
+          "y": 4.6
+        },
+        "F": {
+          "x": 10.2,
+          "y": 0.4
+        }
+      },
+      "notes": "W=12 sites, H=6 (3 rows), siteW=1, rowH=2, row bottoms y=0,2,4. starter_illegal: A,B,C overlap on middle row; D fixed macro at (8,4). starter_float: global-place floats for greedy snap.",
+      "placement": {
+        "A": {
+          "x": 4,
+          "y": 2
+        },
+        "B": {
+          "x": 4,
+          "y": 2
+        },
+        "C": {
+          "x": 4,
+          "y": 2
+        },
+        "D": {
+          "x": 8,
+          "y": 4
+        },
+        "E": {
+          "x": 0,
+          "y": 4
+        },
+        "F": {
+          "x": 10,
+          "y": 0
+        }
+      }
+    },
+    "ties": {
+      "chip": {
+        "W": 6,
+        "H": 4,
+        "siteW": 1,
+        "rowH": 2,
+        "rows": [
+          0,
+          2
+        ]
+      },
+      "cells": [
+        {
+          "id": "A",
+          "width": 1
+        },
+        {
+          "id": "B",
+          "width": 1
+        }
+      ],
+      "nets": [
+        [
+          "A",
+          "B"
+        ]
+      ],
+      "fixed_macros": [],
+      "placement": {
+        "A": {
+          "x": 2.5,
+          "y": 1
+        },
+        "B": {
+          "x": 3.5,
+          "y": 1
+        }
+      }
+    },
+    "touching": {
+      "chip": {
+        "W": 6,
+        "H": 4,
+        "siteW": 1,
+        "rowH": 2,
+        "rows": [
+          0,
+          2
+        ]
+      },
+      "cells": [
+        {
+          "id": "A",
+          "width": 1
+        },
+        {
+          "id": "B",
+          "width": 1
+        }
+      ],
+      "nets": [
+        [
+          "A",
+          "B"
+        ]
+      ],
+      "fixed_macros": [],
+      "placement": {
+        "A": {
+          "x": 1,
+          "y": 0
+        },
+        "B": {
+          "x": 2,
+          "y": 0
+        }
+      }
+    },
+    "clamp": {
+      "chip": {
+        "W": 6,
+        "H": 4,
+        "siteW": 1,
+        "rowH": 2,
+        "rows": [
+          0,
+          2
+        ]
+      },
+      "cells": [
+        {
+          "id": "A",
+          "width": 2
+        },
+        {
+          "id": "B",
+          "width": 2
+        }
+      ],
+      "nets": [
+        [
+          "A",
+          "B"
+        ]
+      ],
+      "fixed_macros": [],
+      "placement": {
+        "A": {
+          "x": -0.6,
+          "y": 0.2
+        },
+        "B": {
+          "x": 5.7,
+          "y": 2.4
+        }
+      }
+    }
+  },
+  "results": {
+    "teacher": {
+      "positions": {
+        "A": {
+          "x": 4,
+          "y": 2
+        },
+        "B": {
+          "x": 4,
+          "y": 2
+        },
+        "C": {
+          "x": 5,
+          "y": 2
+        },
+        "D": {
+          "x": 8,
+          "y": 4
+        },
+        "E": {
+          "x": 0,
+          "y": 4
+        },
+        "F": {
+          "x": 10,
+          "y": 0
+        }
+      },
+      "trace": [
+        {
+          "id": "A",
+          "before": {
+            "x": 3.7,
+            "y": 1.2
+          },
+          "target": {
+            "x": 4,
+            "y": 2
+          },
+          "rounded": 4,
+          "width": 2,
+          "fixed": false,
+          "displacement": 1.0999999999999999,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4.1,
+              "y": 1.4
+            },
+            "C": {
+              "x": 5.2,
+              "y": 2.3
+            },
+            "D": {
+              "x": 8.4,
+              "y": 3.8
+            },
+            "E": {
+              "x": 0.3,
+              "y": 4.6
+            },
+            "F": {
+              "x": 10.2,
+              "y": 0.4
+            }
+          }
+        },
+        {
+          "id": "B",
+          "before": {
+            "x": 4.1,
+            "y": 1.4
+          },
+          "target": {
+            "x": 4,
+            "y": 2
+          },
+          "rounded": 4,
+          "width": 2,
+          "fixed": false,
+          "displacement": 0.6999999999999997,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            },
+            "C": {
+              "x": 5.2,
+              "y": 2.3
+            },
+            "D": {
+              "x": 8.4,
+              "y": 3.8
+            },
+            "E": {
+              "x": 0.3,
+              "y": 4.6
+            },
+            "F": {
+              "x": 10.2,
+              "y": 0.4
+            }
+          }
+        },
+        {
+          "id": "C",
+          "before": {
+            "x": 5.2,
+            "y": 2.3
+          },
+          "target": {
+            "x": 5,
+            "y": 2
+          },
+          "rounded": 5,
+          "width": 2,
+          "fixed": false,
+          "displacement": 0.5,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            },
+            "C": {
+              "x": 5,
+              "y": 2
+            },
+            "D": {
+              "x": 8.4,
+              "y": 3.8
+            },
+            "E": {
+              "x": 0.3,
+              "y": 4.6
+            },
+            "F": {
+              "x": 10.2,
+              "y": 0.4
+            }
+          }
+        },
+        {
+          "id": "D",
+          "before": {
+            "x": 8.4,
+            "y": 3.8
+          },
+          "target": {
+            "x": 8,
+            "y": 4
+          },
+          "rounded": 8,
+          "width": 2,
+          "fixed": true,
+          "displacement": 0.6000000000000005,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            },
+            "C": {
+              "x": 5,
+              "y": 2
+            },
+            "D": {
+              "x": 8,
+              "y": 4
+            },
+            "E": {
+              "x": 0.3,
+              "y": 4.6
+            },
+            "F": {
+              "x": 10.2,
+              "y": 0.4
+            }
+          }
+        },
+        {
+          "id": "E",
+          "before": {
+            "x": 0.3,
+            "y": 4.6
+          },
+          "target": {
+            "x": 0,
+            "y": 4
+          },
+          "rounded": 0,
+          "width": 1,
+          "fixed": false,
+          "displacement": 0.8999999999999997,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            },
+            "C": {
+              "x": 5,
+              "y": 2
+            },
+            "D": {
+              "x": 8,
+              "y": 4
+            },
+            "E": {
+              "x": 0,
+              "y": 4
+            },
+            "F": {
+              "x": 10.2,
+              "y": 0.4
+            }
+          }
+        },
+        {
+          "id": "F",
+          "before": {
+            "x": 10.2,
+            "y": 0.4
+          },
+          "target": {
+            "x": 10,
+            "y": 0
+          },
+          "rounded": 10,
+          "width": 1,
+          "fixed": false,
+          "displacement": 0.5999999999999993,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            },
+            "C": {
+              "x": 5,
+              "y": 2
+            },
+            "D": {
+              "x": 8,
+              "y": 4
+            },
+            "E": {
+              "x": 0,
+              "y": 4
+            },
+            "F": {
+              "x": 10,
+              "y": 0
+            }
+          }
+        }
+      ],
+      "metrics": {
+        "siteAligned": 6,
+        "rowAligned": 6,
+        "inBounds": 6,
+        "fixedAligned": 1,
+        "fixedCount": 1,
+        "displacement": 4.3999999999999995,
+        "movableDisplacement": 3.7999999999999985,
+        "hpwl": 32,
+        "overlaps": [
+          {
+            "a": "A",
+            "b": "B",
+            "width": 2,
+            "height": 2,
+            "area": 4
+          },
+          {
+            "a": "A",
+            "b": "C",
+            "width": 1,
+            "height": 2,
+            "area": 2
+          },
+          {
+            "a": "B",
+            "b": "C",
+            "width": 1,
+            "height": 2,
+            "area": 2
+          }
+        ],
+        "legal": false
+      },
+      "before": {
+        "siteAligned": 0,
+        "rowAligned": 0,
+        "inBounds": 5,
+        "fixedAligned": 0,
+        "fixedCount": 1,
+        "displacement": 0,
+        "movableDisplacement": 0,
+        "hpwl": 36,
+        "overlaps": [
+          {
+            "a": "A",
+            "b": "B",
+            "width": 1.6000000000000005,
+            "height": 1.8000000000000003,
+            "area": 2.8800000000000012
+          },
+          {
+            "a": "A",
+            "b": "C",
+            "width": 0.5,
+            "height": 0.9000000000000004,
+            "area": 0.4500000000000002
+          },
+          {
+            "a": "B",
+            "b": "C",
+            "width": 0.8999999999999995,
+            "height": 1.1,
+            "area": 0.9899999999999995
+          }
+        ],
+        "legal": false
+      }
+    },
+    "collision": {
+      "positions": {
+        "A": {
+          "x": 4,
+          "y": 2
+        },
+        "B": {
+          "x": 4,
+          "y": 2
+        },
+        "C": {
+          "x": 4,
+          "y": 2
+        },
+        "D": {
+          "x": 8,
+          "y": 4
+        },
+        "E": {
+          "x": 0,
+          "y": 4
+        },
+        "F": {
+          "x": 10,
+          "y": 0
+        }
+      },
+      "trace": [
+        {
+          "id": "A",
+          "before": {
+            "x": 4,
+            "y": 2
+          },
+          "target": {
+            "x": 4,
+            "y": 2
+          },
+          "rounded": 4,
+          "width": 2,
+          "fixed": false,
+          "displacement": 0,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            },
+            "C": {
+              "x": 4,
+              "y": 2
+            },
+            "D": {
+              "x": 8,
+              "y": 4
+            },
+            "E": {
+              "x": 0,
+              "y": 4
+            },
+            "F": {
+              "x": 10,
+              "y": 0
+            }
+          }
+        },
+        {
+          "id": "B",
+          "before": {
+            "x": 4,
+            "y": 2
+          },
+          "target": {
+            "x": 4,
+            "y": 2
+          },
+          "rounded": 4,
+          "width": 2,
+          "fixed": false,
+          "displacement": 0,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            },
+            "C": {
+              "x": 4,
+              "y": 2
+            },
+            "D": {
+              "x": 8,
+              "y": 4
+            },
+            "E": {
+              "x": 0,
+              "y": 4
+            },
+            "F": {
+              "x": 10,
+              "y": 0
+            }
+          }
+        },
+        {
+          "id": "C",
+          "before": {
+            "x": 4,
+            "y": 2
+          },
+          "target": {
+            "x": 4,
+            "y": 2
+          },
+          "rounded": 4,
+          "width": 2,
+          "fixed": false,
+          "displacement": 0,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            },
+            "C": {
+              "x": 4,
+              "y": 2
+            },
+            "D": {
+              "x": 8,
+              "y": 4
+            },
+            "E": {
+              "x": 0,
+              "y": 4
+            },
+            "F": {
+              "x": 10,
+              "y": 0
+            }
+          }
+        },
+        {
+          "id": "D",
+          "before": {
+            "x": 8,
+            "y": 4
+          },
+          "target": {
+            "x": 8,
+            "y": 4
+          },
+          "rounded": 8,
+          "width": 2,
+          "fixed": true,
+          "displacement": 0,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            },
+            "C": {
+              "x": 4,
+              "y": 2
+            },
+            "D": {
+              "x": 8,
+              "y": 4
+            },
+            "E": {
+              "x": 0,
+              "y": 4
+            },
+            "F": {
+              "x": 10,
+              "y": 0
+            }
+          }
+        },
+        {
+          "id": "E",
+          "before": {
+            "x": 0,
+            "y": 4
+          },
+          "target": {
+            "x": 0,
+            "y": 4
+          },
+          "rounded": 0,
+          "width": 1,
+          "fixed": false,
+          "displacement": 0,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            },
+            "C": {
+              "x": 4,
+              "y": 2
+            },
+            "D": {
+              "x": 8,
+              "y": 4
+            },
+            "E": {
+              "x": 0,
+              "y": 4
+            },
+            "F": {
+              "x": 10,
+              "y": 0
+            }
+          }
+        },
+        {
+          "id": "F",
+          "before": {
+            "x": 10,
+            "y": 0
+          },
+          "target": {
+            "x": 10,
+            "y": 0
+          },
+          "rounded": 10,
+          "width": 1,
+          "fixed": false,
+          "displacement": 0,
+          "positions": {
+            "A": {
+              "x": 4,
+              "y": 2
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            },
+            "C": {
+              "x": 4,
+              "y": 2
+            },
+            "D": {
+              "x": 8,
+              "y": 4
+            },
+            "E": {
+              "x": 0,
+              "y": 4
+            },
+            "F": {
+              "x": 10,
+              "y": 0
+            }
+          }
+        }
+      ],
+      "metrics": {
+        "siteAligned": 6,
+        "rowAligned": 6,
+        "inBounds": 6,
+        "fixedAligned": 1,
+        "fixedCount": 1,
+        "displacement": 0,
+        "movableDisplacement": 0,
+        "hpwl": 32,
+        "overlaps": [
+          {
+            "a": "A",
+            "b": "B",
+            "width": 2,
+            "height": 2,
+            "area": 4
+          },
+          {
+            "a": "A",
+            "b": "C",
+            "width": 2,
+            "height": 2,
+            "area": 4
+          },
+          {
+            "a": "B",
+            "b": "C",
+            "width": 2,
+            "height": 2,
+            "area": 4
+          }
+        ],
+        "legal": false
+      },
+      "before": {
+        "siteAligned": 6,
+        "rowAligned": 6,
+        "inBounds": 6,
+        "fixedAligned": 1,
+        "fixedCount": 1,
+        "displacement": 0,
+        "movableDisplacement": 0,
+        "hpwl": 32,
+        "overlaps": [
+          {
+            "a": "A",
+            "b": "B",
+            "width": 2,
+            "height": 2,
+            "area": 4
+          },
+          {
+            "a": "A",
+            "b": "C",
+            "width": 2,
+            "height": 2,
+            "area": 4
+          },
+          {
+            "a": "B",
+            "b": "C",
+            "width": 2,
+            "height": 2,
+            "area": 4
+          }
+        ],
+        "legal": false
+      }
+    },
+    "ties": {
+      "positions": {
+        "A": {
+          "x": 2,
+          "y": 0
+        },
+        "B": {
+          "x": 4,
+          "y": 0
+        }
+      },
+      "trace": [
+        {
+          "id": "A",
+          "before": {
+            "x": 2.5,
+            "y": 1
+          },
+          "target": {
+            "x": 2,
+            "y": 0
+          },
+          "rounded": 2,
+          "width": 1,
+          "fixed": false,
+          "displacement": 1.5,
+          "positions": {
+            "A": {
+              "x": 2,
+              "y": 0
+            },
+            "B": {
+              "x": 3.5,
+              "y": 1
+            }
+          }
+        },
+        {
+          "id": "B",
+          "before": {
+            "x": 3.5,
+            "y": 1
+          },
+          "target": {
+            "x": 4,
+            "y": 0
+          },
+          "rounded": 4,
+          "width": 1,
+          "fixed": false,
+          "displacement": 1.5,
+          "positions": {
+            "A": {
+              "x": 2,
+              "y": 0
+            },
+            "B": {
+              "x": 4,
+              "y": 0
+            }
+          }
+        }
+      ],
+      "metrics": {
+        "siteAligned": 2,
+        "rowAligned": 2,
+        "inBounds": 2,
+        "fixedAligned": 0,
+        "fixedCount": 0,
+        "displacement": 3,
+        "movableDisplacement": 3,
+        "hpwl": 2,
+        "overlaps": [],
+        "legal": true
+      },
+      "before": {
+        "siteAligned": 0,
+        "rowAligned": 0,
+        "inBounds": 2,
+        "fixedAligned": 0,
+        "fixedCount": 0,
+        "displacement": 0,
+        "movableDisplacement": 0,
+        "hpwl": 1,
+        "overlaps": [],
+        "legal": false
+      }
+    },
+    "touching": {
+      "positions": {
+        "A": {
+          "x": 1,
+          "y": 0
+        },
+        "B": {
+          "x": 2,
+          "y": 0
+        }
+      },
+      "trace": [
+        {
+          "id": "A",
+          "before": {
+            "x": 1,
+            "y": 0
+          },
+          "target": {
+            "x": 1,
+            "y": 0
+          },
+          "rounded": 1,
+          "width": 1,
+          "fixed": false,
+          "displacement": 0,
+          "positions": {
+            "A": {
+              "x": 1,
+              "y": 0
+            },
+            "B": {
+              "x": 2,
+              "y": 0
+            }
+          }
+        },
+        {
+          "id": "B",
+          "before": {
+            "x": 2,
+            "y": 0
+          },
+          "target": {
+            "x": 2,
+            "y": 0
+          },
+          "rounded": 2,
+          "width": 1,
+          "fixed": false,
+          "displacement": 0,
+          "positions": {
+            "A": {
+              "x": 1,
+              "y": 0
+            },
+            "B": {
+              "x": 2,
+              "y": 0
+            }
+          }
+        }
+      ],
+      "metrics": {
+        "siteAligned": 2,
+        "rowAligned": 2,
+        "inBounds": 2,
+        "fixedAligned": 0,
+        "fixedCount": 0,
+        "displacement": 0,
+        "movableDisplacement": 0,
+        "hpwl": 1,
+        "overlaps": [],
+        "legal": true
+      },
+      "before": {
+        "siteAligned": 2,
+        "rowAligned": 2,
+        "inBounds": 2,
+        "fixedAligned": 0,
+        "fixedCount": 0,
+        "displacement": 0,
+        "movableDisplacement": 0,
+        "hpwl": 1,
+        "overlaps": [],
+        "legal": true
+      }
+    },
+    "clamp": {
+      "positions": {
+        "A": {
+          "x": 0,
+          "y": 0
+        },
+        "B": {
+          "x": 4,
+          "y": 2
+        }
+      },
+      "trace": [
+        {
+          "id": "A",
+          "before": {
+            "x": -0.6,
+            "y": 0.2
+          },
+          "target": {
+            "x": 0,
+            "y": 0
+          },
+          "rounded": -1,
+          "width": 2,
+          "fixed": false,
+          "displacement": 0.8,
+          "positions": {
+            "A": {
+              "x": 0,
+              "y": 0
+            },
+            "B": {
+              "x": 5.7,
+              "y": 2.4
+            }
+          }
+        },
+        {
+          "id": "B",
+          "before": {
+            "x": 5.7,
+            "y": 2.4
+          },
+          "target": {
+            "x": 4,
+            "y": 2
+          },
+          "rounded": 6,
+          "width": 2,
+          "fixed": false,
+          "displacement": 2.1,
+          "positions": {
+            "A": {
+              "x": 0,
+              "y": 0
+            },
+            "B": {
+              "x": 4,
+              "y": 2
+            }
+          }
+        }
+      ],
+      "metrics": {
+        "siteAligned": 2,
+        "rowAligned": 2,
+        "inBounds": 2,
+        "fixedAligned": 0,
+        "fixedCount": 0,
+        "displacement": 2.9000000000000004,
+        "movableDisplacement": 2.9000000000000004,
+        "hpwl": 6,
+        "overlaps": [],
+        "legal": true
+      },
+      "before": {
+        "siteAligned": 0,
+        "rowAligned": 0,
+        "inBounds": 0,
+        "fixedAligned": 0,
+        "fixedCount": 0,
+        "displacement": 0,
+        "movableDisplacement": 0,
+        "hpwl": 8.5,
+        "overlaps": [],
+        "legal": false
+      }
+    }
+  }
+}

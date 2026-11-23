@@ -1,0 +1,6 @@
+{
+  "digest": "d9765bcf0717933666a5f61aebe41ca1f60074e2f1641b93a2348504757c5c84",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "HPWL衡量连接，不检查重叠。即使一个指标看起来不错，也不能跳过site、row、边界、fixed和非重叠检查。",
+  "semantic_id": "hpwl-1"
+}

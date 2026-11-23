@@ -1,0 +1,6 @@
+{
+  "digest": "de4b63ef39274a1ed543cbe193f6878586fc018c480ffc797065365044d2c13b",
+  "voice": "en-US-JennyNeural",
+  "text": "After rounding, clamp x between zero and W minus w. On a width-six chip, a width-two cell can place its lower-left corner no farther right than four.",
+  "semantic_id": "clamp-0"
+}

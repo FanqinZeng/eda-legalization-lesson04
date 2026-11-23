@@ -1,0 +1,6 @@
+{
+  "digest": "2ccc51702b9861632311e6aacd4dd2257e2f7a3cfa5bec2d1fef738435bbc4e4",
+  "voice": "en-US-JennyNeural",
+  "text": "Python uses ties-to-even: two point five becomes two, and three point five becomes four. JavaScript’s Math.round gives three for two point five.",
+  "semantic_id": "ties-0"
+}

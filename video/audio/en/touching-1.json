@@ -1,0 +1,6 @@
+{
+  "digest": "3b40635160a7523b9ea93b3ed2f25b79b13f31f993c7b04b08dd840fa775359d",
+  "voice": "en-US-JennyNeural",
+  "text": "Use strict inequalities for interval intersection. Treating contact as overlap would wrongly reject valid adjacent sites.",
+  "semantic_id": "touching-1"
+}

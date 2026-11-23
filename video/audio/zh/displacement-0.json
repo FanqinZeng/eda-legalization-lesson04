@@ -1,0 +1,6 @@
+{
+  "digest": "d2ff2d407bc469e770c552e92e48e8e5e259c090b9d1e9bfe0a5a3fead375880",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "逐单元累加左下角的曼哈顿距离，全体L1位移是四点四。其中恢复固定D，贡献零点六。",
+  "semantic_id": "displacement-0"
+}

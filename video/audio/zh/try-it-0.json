@@ -1,0 +1,6 @@
+{
+  "digest": "59a4ecda5584e8ef3bc33daef9a4811abd3148c9704b290c430c4d6dbcee8c74",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "在网页中编辑一个浮点坐标，逐步看目标位置，再试半整数、越界和边缘接触。不要只记住按钮，要能手算。",
+  "semantic_id": "try-it-0"
+}

@@ -1,0 +1,6 @@
+{
+  "digest": "518639de782eb877f9f3085c7d40e9c4f97c34318622b1dc6828ac4d59a860ff",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "本站在两种语言中显式统一取偶。最近行若也等距，就选择rows列表先出现的一行。边界样例不能被随机测试代替。",
+  "semantic_id": "ties-1"
+}

@@ -1,0 +1,6 @@
+{
+  "digest": "d1dca3fcac6d9f6a47a504de9927e9ab944376c97462016f6f93789862d10606",
+  "voice": "en-US-JennyNeural",
+  "text": "This is the central limitation of greedy snap: it quantizes coordinates only. Perfect site and row alignment does not imply non-overlapping placement.",
+  "semantic_id": "collision-1"
+}

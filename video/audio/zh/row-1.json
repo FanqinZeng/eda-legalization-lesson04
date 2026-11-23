@@ -1,0 +1,6 @@
+{
+  "digest": "45dda8a8f7df0aa34b941a2bb6bcecb9e06c807bc3babd92944a3e55c98668e9",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "y坐标表示单元左下角，不是中心。本课单元高度等于行高二，所以行底加上完整高度必须留在芯片内。",
+  "semantic_id": "row-1"
+}

@@ -1,0 +1,6 @@
+{
+  "digest": "fa5301af71fe72f71f7fd9f85e3b8da79920b7c485e335eab5196edd4c6a97fe",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "A和B最终都在四、二，C在五、二。三个单元的宽度都是二，所以A与B、A与C、B与C都重叠。",
+  "semantic_id": "collision-0"
+}

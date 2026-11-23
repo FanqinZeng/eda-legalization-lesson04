@@ -1,0 +1,6 @@
+{
+  "digest": "a5b3b5fa7fdd1f4807b32bd2373e39e88527b45978a6aa117bc52bc9ee9c16da",
+  "voice": "en-US-JennyNeural",
+  "text": "Removing collisions requires later row packing, overlap removal or a method such as Abacus. This lesson explains greedy snap without secretly adding another solver.",
+  "semantic_id": "limits-0"
+}

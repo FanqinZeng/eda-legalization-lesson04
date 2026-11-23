@@ -1,0 +1,6 @@
+{
+  "digest": "31567fb57287c53f7e81fe163a7e09a67a752304b7e72429258e3189e25dfd18",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "全局布局留下了浮点坐标。把单元推到最近的格点与行，看起来像是最后一步。真的是这样吗？",
+  "semantic_id": "question-0"
+}

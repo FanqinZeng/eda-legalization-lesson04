@@ -1,0 +1,6 @@
+{
+  "digest": "6c273cc17e37006bf7a353aa406273dfc0e1f055c48703e58b556be66a7c3fa7",
+  "voice": "en-US-JennyNeural",
+  "text": "A and B both finish at four, two, while C finishes at five, two. Each has width two, so A/B, A/C and B/C all overlap.",
+  "semantic_id": "collision-0"
+}

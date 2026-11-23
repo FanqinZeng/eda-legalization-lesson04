@@ -1,0 +1,6 @@
+{
+  "digest": "490a15213aa87d84dcf0c1f8c3d6e79e21b44998cf89068bbbcbf2385a0e5de8",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "Python采用等距取偶：二点五变成二，三点五变成四。JS的Math.round对二点五会给三。",
+  "semantic_id": "ties-0"
+}

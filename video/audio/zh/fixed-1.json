@@ -1,0 +1,6 @@
+{
+  "digest": "0c9230c3f3bd1bde56924693f9ec8a8b060daa798973a5c9f61ad97cfdc95e4e",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "这不是让固定宏参与优化。恢复产生零点六的坐标差，是否计入位移，必须明确说明。",
+  "semantic_id": "fixed-1"
+}

@@ -1,0 +1,6 @@
+{
+  "digest": "1f476c005541eeda59cfe3bf4d4d08bc6e970ab8a3eca343791071407850f682",
+  "voice": "en-US-JennyNeural",
+  "text": "Checking x against the chip width alone is insufficient. A width-two cell whose lower-left corner is at five already extends beyond six.",
+  "semantic_id": "clamp-1"
+}

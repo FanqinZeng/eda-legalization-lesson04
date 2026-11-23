@@ -1,0 +1,6 @@
+{
+  "digest": "1a32db3c056d595755927a0262ca2c64e1611d84d0e243debbec97631e0f8bce",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "本课HPWL使用cell中心：x加宽度的一半，y加行高的一半。六个net各计一次，总HPWL是三十二。",
+  "semantic_id": "hpwl-0"
+}

@@ -1,0 +1,6 @@
+{
+  "digest": "546ec0f7c9111c0ad9f7389b3f47f466057bc3fbe46970bf2a341008619949a0",
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "text": "这是greedy snap的核心限制：它只量化坐标。site和row全部对齐，并不意味着布局通过非重叠检查。",
+  "semantic_id": "collision-1"
+}
