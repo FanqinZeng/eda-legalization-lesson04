@@ -1,0 +1,17 @@
+"""Regress the four independently reproduced whole-course review findings."""
+from pathlib import Path
+import json,argparse,sys,subprocess,shutil,tempfile
+from playwright.sync_api import sync_playwright
+p=argparse.ArgumentParser();p.add_argument('--url',default='http://127.0.0.1:8186/');p.add_argument('--report',default='review-after.json');a=p.parse_args();root=Path(__file__).resolve().parents[1];checks={};details={}
+with tempfile.TemporaryDirectory(prefix='legal-isolated-') as temp:
+ target=Path(temp)/'course';(target/'scripts').mkdir(parents=True);shutil.copy(root/'scripts/build-python.py',target/'scripts');shutil.copytree(root/'site/downloads',target/'site/downloads');shutil.copytree(root/'site/python',target/'site/python');before={n:(target/'site/python'/n).read_bytes() for n in ['index.html','workspace.mjs','workspace.css']};r=subprocess.run([sys.executable,'scripts/build-python.py'],cwd=target,capture_output=True,text=True);checks['isolated_python_generator']=r.returncode==0 and all((target/'site/python'/n).read_bytes()==v for n,v in before.items());details['isolated_error']=r.stderr[-800:]
+with sync_playwright() as pw:
+ b=pw.chromium.launch(executable_path='/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',headless=True);page=b.new_page(viewport={'width':1440,'height':1000});page.goto(a.url+'?lang=en',wait_until='networkidle')
+ x=page.locator('input[data-id="A"][data-axis="x"]');y=page.locator('input[data-id="A"][data-axis="y"]')
+ def put(loc,val):loc.fill(str(val));loc.dispatch_event('change')
+ put(x,2.45);put(y,1.04);cell=page.locator('#before-board [data-cell="A"]');cell.focus();cell.press('ArrowRight');details['keyboard']={'x':x.input_value(),'y':y.input_value(),'target':page.locator('[data-target="A"]').inner_text()};checks['keyboard_preserves_axis_and_increment']=abs(float(x.input_value())-2.55)<1e-12 and float(y.input_value())==1.04
+ put(x,2.45);put(y,1.04);rect=page.locator('#before-board [data-cell="A"] rect');rect.scroll_into_view_if_needed();box=rect.bounding_box();scale=page.locator('#before-board svg').evaluate('(s)=>s.getScreenCTM().a');page.mouse.move(box['x']+box['width']/2,box['y']+box['height']/2);page.mouse.down();page.mouse.move(box['x']+box['width']/2+20*scale,box['y']+box['height']/2,steps=10);page.mouse.up();details['drag']={'x':x.input_value(),'y':y.input_value()};checks['drag_preserves_fractional_origin']=abs(float(x.input_value())-2.95)<1e-10 and abs(float(y.input_value())-1.04)<1e-10
+ put(x,99);page.locator('#language').select_option('zh');details['invalid']={'value':x.input_value(),'aria_invalid':x.get_attribute('aria-invalid'),'message':page.locator('#input-status').inner_text()};checks['replaced_valid_input_clears_diagnostic']=x.get_attribute('aria-invalid') is None and page.locator('#input-status').inner_text()==''
+ page.locator('#preset').select_option('touching');xB=page.locator('input[data-id="B"][data-axis="x"]');put(xB,1.9999999995);page.locator('#prev').click();page.locator('#prev').click();checks['tiny_positive_overlap_is_illegal']=page.locator('.metric strong').last.inner_text()=='1' and not page.locator('#legality').evaluate('(e)=>e.classList.contains("good")');details['tiny_overlap']=page.locator('#overlaps').inner_text();b.close()
+report={'status':'passed' if all(checks.values()) else 'failed','checks':checks,'details':details};(root/'docs/qa'/a.report).write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False,indent=2))
+assert all(checks.values()),checks

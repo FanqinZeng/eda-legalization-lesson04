@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "checks": {
+    "isolated_python_generator": true,
+    "keyboard_preserves_axis_and_increment": true,
+    "drag_preserves_fractional_origin": true,
+    "replaced_valid_input_clears_diagnostic": true,
+    "tiny_positive_overlap_is_illegal": true
+  },
+  "details": {
+    "isolated_error": "",
+    "keyboard": {
+      "x": "2.55",
+      "y": "1.04",
+      "target": "(3,2)"
+    },
+    "drag": {
+      "x": "2.95",
+      "y": "1.04"
+    },
+    "invalid": {
+      "value": "2.95",
+      "aria_invalid": null,
+      "message": ""
+    },
+    "tiny_overlap": "正面积重叠：A/B (面积 1.00e-9)"
+  }
+}

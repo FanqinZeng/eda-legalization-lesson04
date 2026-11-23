@@ -1,0 +1,28 @@
+{
+  "status": "failed",
+  "checks": {
+    "isolated_python_generator": false,
+    "keyboard_preserves_axis_and_increment": false,
+    "drag_preserves_fractional_origin": false,
+    "replaced_valid_input_clears_diagnostic": false,
+    "tiny_positive_overlap_is_illegal": false
+  },
+  "details": {
+    "isolated_error": "python'/name).read_text()\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/fanqin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/fanqin/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/hf/hkw24p4n3r3gj1_kpbrxrd0h0000gn/T/legal-isolated-bo1k4h9w/eda-congestion-lesson05/site/python/index.html'\n",
+    "keyboard": {
+      "x": "2.6",
+      "y": "1",
+      "target": "(3,0)"
+    },
+    "drag": {
+      "x": "2.9",
+      "y": "1"
+    },
+    "invalid": {
+      "value": "2.9",
+      "aria_invalid": "true",
+      "message": "Enter a finite coordinate from −2 to the chip boundary +2; results were retained."
+    },
+    "tiny_overlap": "没有正面积重叠。是否完全合法，还要同时检查site、row、边界和fixed约束。"
+  }
+}

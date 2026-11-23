@@ -16,7 +16,7 @@ def measure(data, positions, origin=None):
         for b in ids[i+1:]:
             pa,pb=positions[a],positions[b]
             dx=min(pa['x']+widths[a],pb['x']+widths[b])-max(pa['x'],pb['x']);dy=min(pa['y']+chip['rowH'],pb['y']+chip['rowH'])-max(pa['y'],pb['y'])
-            if dx>1e-9 and dy>1e-9:overlaps.append({'a':a,'b':b,'area':dx*dy})
+            if dx>0 and dy>0:overlaps.append({'a':a,'b':b,'area':dx*dy})
     distances={k:abs(p['x']-origin[k]['x'])+abs(p['y']-origin[k]['y']) for k,p in positions.items()}
     hpwl=0
     for net in data['nets']:

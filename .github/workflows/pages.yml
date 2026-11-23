@@ -27,6 +27,8 @@ jobs:
       - name: Verify frozen skill provenance and online materials
         run: |
           python3 scripts/check-transfer.py
+          python3 scripts/build-python.py
+          git diff --exit-code -- site/python site/downloads/exercise.py
           python3 scripts/build_reading.py --check
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
