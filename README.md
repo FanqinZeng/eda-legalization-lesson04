@@ -2,7 +2,7 @@
 
 中英文Greedy Site/Row Snap交互课程，对应 [issue #36](https://github.com/yongfu-li/eda-learning/issues/36) 与 [固定上游教材](https://github.com/yongfu-li/eda-learning/tree/003bcd49e3794e6cfd2680181cdbd347d673ad07/courses/learn_legalization/module02-01-greedy-snap)。
 
-公开入口：https://fanqinzeng.github.io/eda-legalization-lesson04/ 。实际首次上线结果见 [PROGRESS.md](PROGRESS.md)。
+公开入口：[课程主页](https://fanqinzeng.github.io/eda-legalization-lesson04/)。实际部署与验收结果见 [PROGRESS.md](PROGRESS.md)。
 
 一次消费拥塞试点冻结的 **skill v2.0.0**；五文件SHA256及消费记录在 [docs/skill-transfer.json](docs/skill-transfer.json)。沿用已验证的版式、播放器、Worker与语义影片流水线，为本课新写算法、图形、讲义和配音；必要的正确性与验收修复不重新开启风格探索。
 
@@ -20,6 +20,7 @@
 ```bash
 python3 scripts/serve.py --port 8186
 node --test tests/*.test.mjs
+python3 scripts/build-python.py
 python3 scripts/build_reading.py --check
 python3 scripts/check-transfer.py
 python3 scripts/check-site.py

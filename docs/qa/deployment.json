@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "base": "https://fanqinzeng.github.io/eda-legalization-lesson04/",
+  "browser": "isolated Microsoft Edge headless",
+  "checks": [
+    "teacher golden metrics and illegal-overlap result",
+    "real processing prefix and complete result",
+    "keyboard cell movement retains focus",
+    "consecutive coordinate editing and exact row tie",
+    "complete language switch preserves input and table labels",
+    "invalid coordinate preserves state and reset recovers",
+    "fixed macro input and keyboard protection",
+    "dragging uses the actual SVG coordinate transform",
+    "width clamp and touching-without-overlap cases",
+    "submitted-answer focus and progress persist and reset",
+    "mobile layout and chapter access at four widths",
+    "English first visit configures localized film without downloading it",
+    "actual MP4 playback, chapter seek, voice/UI and preference retention",
+    "complete notes and independent code are readable online",
+    "real CPython teacher result",
+    "real Python exceptions",
+    "timeout terminates and restores the interpreter",
+    "manual Stop and live edited-code execution",
+    "denied storage retains lesson functionality"
+  ],
+  "media_playback_checked": true,
+  "errors": []
+}
