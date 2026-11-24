@@ -1,4 +1,4 @@
-# v2：真实试点之后如何一次迁移
+# 真实试点之后如何一次迁移
 
 试点：同工作区 `eda-congestion-lesson05/`，公开目标 https://fanqinzeng.github.io/eda-congestion-lesson05/ 。具体观察与回归在 `docs/skill-iteration.md`、`docs/qa/browser.json`、`docs/qa/media.json`、`tests/test_film_typography.py` 和 `tests/player.test.mjs`。初稿、before帧和散列在 `docs/skill-history/v1*` 与 `docs/qa/v1/`。仅以实际部署记录判断公开站是否已发布。
 
@@ -29,3 +29,11 @@
 3. 沿用试点的版式、双语组件与媒体机制，一次完成新的网页、例题、讲义、Python、语义分镜及课程专用图形。
 4. 看真实样片和代表帧以发现事实/排版错误，完成两种实际MP4；这些是正常制作与验收，不是重启风格探索。
 5. 运行真实学习路径、数学、媒体、公开资源与部署验证，修复实质错误后交付。不要为了证明“一次性”而跳过必要修复，也不要无依据追加新的整站功能。
+
+## v2.1：把迁移验收前移
+
+第二课`eda-legalization-lesson04`实际消费的是v2.0.0。其`docs/qa/review-before.json`、`review-after.json`、`review-findings.md`记录：小数移动改变未操作轴、全局epsilon漏掉严格正面积重叠、语言重绘留下过期错误、生成器依赖兄弟仓库；前后五个可观察断言均从失败变为通过。首次浏览器验收还修正了动态目标列翻译与答题提交焦点；规则适用于完整状态变化，不能只测初始静态页面。
+
+v2.1把这些经验写入[制作约定](production.md)的前置检查，后续课在写事件/判定/生成器时就采用，完成网页和影片后再做完整验收。现成回归可参考第二课`scripts/check-review.py`、`tests/engine.test.mjs`和`scripts/check-browser.py`的机制；按新课模型改造，不复制教师答案或绝对机器路径。
+
+新课开始时冻结当时的最新版；旧课消费证明继续核对原版本的历史快照。v2.1更新不等于第二课曾用v2.1生成，也不等于已把整部新课重新制作一次。后续交付报告写明实际制作轮次、必要修复和执行过的检查。

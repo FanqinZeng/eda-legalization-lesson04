@@ -6,6 +6,8 @@
 
 一次消费拥塞试点冻结的 **skill v2.0.0**；五文件SHA256及消费记录在 [docs/skill-transfer.json](docs/skill-transfer.json)。沿用已验证的版式、播放器、Worker与语义影片流水线，为本课新写算法、图形、讲义和配音；必要的正确性与验收修复不重新开启风格探索。
 
+当前可复用skill已更新为 [v2.1.0](skills/eda-lesson-studio/SKILL.md)，吸收合法化课验收问题，并加入制作前置检查。已发布课程原来消费的版本及散列继续保留；后续新课使用最新版，具体更新见 [版本说明](docs/skill-update-v2.1.md)。
+
 ## 内容
 
 - 全站中文/English，保留实验状态；可编辑坐标、真实宽度与行高的双布局图、拖动/键盘、真实逐cell前缀与重放、全部重叠对和合法性分项。

@@ -10,6 +10,10 @@
 
 报告：docs/qa/deployment.json、public-resources.json、navigation-online.json、media.json和独立审阅before/after。完整人工听审与物理触屏设备测试未做，未将自动验收写成这些人工验收。后续文档提交不改变已发布site内容。
 
+## skill维护：v2.1.0
+
+按用户后续要求将第二课验收经验写回skill，当前工作副本升级至v2.1.0，详情docs/skill-update-v2.1.md。原始消费v2.0.0及散列继续保留在历史快照；本次更新不改网页、影片或原有发布源。新版结构、历史证明回归、独立微型源码包与实际Edge试用均通过，五文件版本快照及散列已保存。
+
 ## 制作历史（以下记录保留当时状态）
 
 2026-11-24，Asia/Shanghai。目标截止：今天14:00。

@@ -1,0 +1,12 @@
+{
+  "version": "2.1.0",
+  "previous_version": "2.0.0",
+  "basis": "Observed legalization course acceptance failures and a bounded independent forward test",
+  "files": {
+    "SKILL.md": "f0b0ce6faa62c005a6feab7e9ef2da96a42be7d6cc44741b7b6817c1d92a54db",
+    "references/evidence.md": "25c9729a742a1ab7b37cdd9617334885f28c0287f063d46f424c609cf7b6450d",
+    "references/media.md": "83422522131a1eb82ec2f24bd7d864a373fe5350dd42b9205132c3cf84ab7ae8",
+    "references/pilot-transfer.md": "18ac79c09135de9acd6cdfef159abcb80377337e58203deca9fc713fa706c4a2",
+    "references/production.md": "fbc85e6b3409c1e9602f3a7f9aea9755c4ff05c7d8256508ea9fb6399750966a"
+  }
+}

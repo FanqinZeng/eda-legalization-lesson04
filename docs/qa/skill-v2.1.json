@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "scope": "skill provenance and update, not a new full-course production",
+  "checks": {
+    "consumed_v2_verifies_in_isolated_checkout": true,
+    "working_update_does_not_rewrite_consumed_proof": true,
+    "altered_consumed_snapshot_is_rejected": true,
+    "old_manifest_unchanged": true,
+    "eda-congestion-lesson05_published_course_unchanged": true,
+    "eda-legalization-lesson04_published_course_unchanged": true
+  },
+  "baseline_evidence": "v2.0.0 production review-before.json has five failed assertions; review-after.json has the same five passed",
+  "version": "2.1.0",
+  "skill_sha256": {
+    "SKILL.md": "f0b0ce6faa62c005a6feab7e9ef2da96a42be7d6cc44741b7b6817c1d92a54db",
+    "references/evidence.md": "25c9729a742a1ab7b37cdd9617334885f28c0287f063d46f424c609cf7b6450d",
+    "references/media.md": "83422522131a1eb82ec2f24bd7d864a373fe5350dd42b9205132c3cf84ab7ae8",
+    "references/pilot-transfer.md": "18ac79c09135de9acd6cdfef159abcb80377337e58203deca9fc713fa706c4a2",
+    "references/production.md": "fbc85e6b3409c1e9602f3a7f9aea9755c4ff05c7d8256508ea9fb6399750966a"
+  },
+  "structure_validation": {
+    "central": "passed",
+    "congestion_working_copy": "passed",
+    "legalization_working_copy": "passed"
+  },
+  "independent_forward_test": {
+    "status": "passed",
+    "artifacts": "https://github.com/FanqinZeng/eda-congestion-lesson05/tree/main/docs/qa/skill-v2.1-forward-test",
+    "fresh_context": true,
+    "prior_course_sources_read": false,
+    "model_checks": "Node fixtures and 9 exact JS/Python geometry comparisons passed",
+    "reproduction": "isolated source copy regenerated twice; all handwritten source hashes unchanged; generated Python and readable reference matched",
+    "browser": "Microsoft Edge 154.0.4258.37 headless, real local files",
+    "browser_checks": [
+      "non-step-aligned fractional keyboard movement preserves other axis",
+      "quantized drag preserves origin and reversal",
+      "invalid drafts and translated diagnostics",
+      "reset clears error state",
+      "repeated coordinate editing",
+      "quiz answer and Tab focus",
+      "360px horizontal bounds",
+      "complete generated reference readable"
+    ],
+    "root_independent_rerun": "node check.cjs; python3 reference.py; python3 generate.py; python3 verify.py; real Edge browser_check.py all passed",
+    "fixture_correction": "Use actual SVG screen CTM for drag distance; focused bounding box includes outline",
+    "limits": "Bounded local interaction and generation exercise; no new full-course films or physical touch test"
+  },
+  "repository_checks": {
+    "congestion": "10 Node tests, 45 resource/anchor references, online materials consistency passed",
+    "legalization": "10 Node tests, 47 resource/anchor references, online materials consistency and original v2.0.0 consumed hashes passed"
+  }
+}

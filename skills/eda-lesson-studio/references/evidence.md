@@ -31,3 +31,9 @@
 GitHub connector 与 gh CLI 均验证为 FanqinZeng；两个目标仓库原始为空，账号有 admin / push 权限，CLI 含 repo 和 workflow 权限。媒体依赖环境及 imageio_ffmpeg 已实际导入验证。受限沙箱内的联网错误不能当作登录失效；联网验证后 CLI 登录正常。
 
 两个历史“检查 GitHub 账号访问”类聊天中有单次 turn 超过工具读取上限，未声称完整读完。核心教学要求取自以上已成功读取的实际消息及本地可核对产物。
+
+## Legalization Lesson 04：v2.1增量来源
+
+消费v2.0.0的凭据是`eda-legalization-lesson04/docs/skill-transfer.json`；整课审阅基线`852d1bc..b3f8700`，修复及发布源`6c7705b43123d5ac9773fb8018c96fe2ce558e7f`。原始前后记录见该仓库`docs/qa/review-before.json`、`review-after.json`与`review-findings.md`，补充浏览器记录见`browser.json`、`quiz-focus-*.json`。这些是实际产品缺陷，非假设清单。
+
+本次v2.1归纳小数坐标保真、模型边界与容差分离、双语诊断/焦点状态、独立可再生生成器，以及修复后派生资料和媒体的一致性。可重复使用的做法见`production.md`；原课数值与答案留在课程仓库。保留v2.0.0散列，不把新规则追记为原课已经消费的规则。

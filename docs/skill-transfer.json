@@ -8,5 +8,6 @@
     "references/media.md": "83422522131a1eb82ec2f24bd7d864a373fe5350dd42b9205132c3cf84ab7ae8",
     "references/pilot-transfer.md": "bcff57854b1e628e4c0a13376621695706dfdb77543bae755adb6f4fbcd3501f",
     "references/production.md": "aaa8a6e0010a9e7a7f85d9ea410642ff6ce2aaa5747a3ccde7f7322284bca087"
-  }
+  },
+  "consumed_skill_path": "docs/skill-history/v2"
 }
